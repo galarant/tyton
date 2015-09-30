@@ -21,10 +21,7 @@ var gulp = require('gulp'),
     dest: 'static/built/',
     source: 'app/',
 
-    cssLibs: [
-      'node_modules/basscss/css/basscss.css',
-      'node_modules/basscss-background-images/index.css'
-    ]
+    cssLibs: []
   },
   bundle;
 
