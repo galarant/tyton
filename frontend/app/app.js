@@ -14,4 +14,4 @@ angular.module("tyton", [
       });
   }]);
 
-require("./home/home-controller.js");
+require("./home/ctrl.js");

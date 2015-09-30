@@ -15,8 +15,6 @@
     "angular-cookies": "~1.4.2",
     "angular-resource": "~1.4.2",
     "angular-route": "~1.4.2",
-    "basscss": "~7.0.0",
-    "basscss-background-images": "0.0.9",
     "browserify": "^10.2.6",
     "browserify-ng-html2js": "^1.1.2",
     "gulp": "^3.9.0",
