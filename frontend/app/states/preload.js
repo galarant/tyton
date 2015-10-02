@@ -13,7 +13,7 @@ Preload.prototype = {
 
     //load our assets
     this.load.image("background", "static/assets/background.png");
-    this.load.image("radial_gradient", "static/assets/radial-gradient.jpg");
+    this.load.image("color_gradient", "static/assets/color_gradient.jpg");
   },
 
   create: function() {
