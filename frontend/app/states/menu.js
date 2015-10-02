@@ -28,6 +28,17 @@ Menu.prototype = {
 
   },
 
+  resize: function() {
+
+    this.background.width = this.game.width;
+    this.background.height = this.game.height;
+    this.background.x = this.game.world.centerX;
+    this.background.y = this.game.world.centerY;
+
+    this.title.x = this.game.world.centerX;
+    this.title.y = this.game.world.centerY;
+  }
+
 };
 
 module.exports = Menu;

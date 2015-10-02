@@ -4,11 +4,7 @@ var MenuState = require("../states/menu");
 
 function HomeController ($location) {
 
-  // get dimensions of the window considering retina displays
-  var w = window.innerWidth * window.devicePixelRatio;
-  var h = window.innerHeight * window.devicePixelRatio;
-
-  var game = new Phaser.Game((h > w) ? h : w, (h > w) ? w : h, Phaser.AUTO, "tyton_canvas");
+  var game = new Phaser.Game('100%', '100%', Phaser.AUTO, '');
 
   //define the game states
   game.state.add("boot", BootState);
