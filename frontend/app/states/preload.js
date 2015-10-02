@@ -12,7 +12,7 @@ Preload.prototype = {
     this.load.setPreloadSprite(this.asset);
 
     //load our assets
-    this.load.image("background", "static/assets/background.jpg");
+    this.load.image("background", "static/assets/background.png");
   },
 
   create: function() {
