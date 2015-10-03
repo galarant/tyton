@@ -1,5 +1,4 @@
 function Preload() {
-  this.asset = null;
   this.ready = false;
 }
 
@@ -7,17 +6,21 @@ Preload.prototype = {
   preload: function() {
     //show the preloader while assets are loading
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
-    this.asset = this.add.sprite(this.width / 2, this.height / 2, "preloader");
-    this.asset.anchor.setTo(0.5, 0.5);
-    this.load.setPreloadSprite(this.asset);
+    this.preloader = this.add.sprite(this.game.world.centerX,
+                                     this.game.world.centerY,
+                                     "preloader");
+    this.preloader.alpha = 0; //preloader is ugly as shit for some reason so we're hiding it for now
+    this.preloader.anchor.setTo(0.5, 0.5);
+    this.load.setPreloadSprite(this.preloader);
 
     //load our assets
     this.load.image("background", "static/assets/background.png");
     this.load.image("color_gradient", "static/assets/color_gradient.jpg");
+    this.load.bitmapFont("glametrix", "static/assets/fonts/glametrix.png", "static/assets/fonts/glametrix.xml");
   },
 
   create: function() {
-    this.asset.cropEnabled = false;
+    this.preloader.cropEnabled = false;
   },
 
   update: function() {

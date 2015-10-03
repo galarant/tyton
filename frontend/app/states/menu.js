@@ -7,6 +7,7 @@ Menu.prototype = {
 
   create: function() {
     //show the background sprite
+    var self = this;
     this.background = this.game.add.sprite(this.game.world.centerX,
                                            this.game.world.centerY,
                                            "background");
@@ -32,13 +33,22 @@ Menu.prototype = {
       {angle: 360}, 20000, "Linear", true, 0, -1, false);
 
     //add the title
-    this.title = this.game.add.text(this.game.world.centerX,
-                                    this.game.world.centerY,
-                                    "TYTON");
+    this.title = this.game.add.bitmapText(this.game.world.centerX,
+                                          this.game.world.centerY,
+                                          "glametrix",
+                                          "TYTON",
+                                          150);
     this.title.anchor.setTo(0.5);
-    this.title.font = "Lucida Console, Monaco, monospace";
-    this.title.fontSize = 60;
-    this.title.fill = "#FFFFFF";
+
+    //animate the title letters
+    self.letter_tween_delay = 300;
+    _(self.title.children).forEach(function(letter) {
+      letter.alpha = 0;
+      self.game.add.tween(letter).to(
+        {alpha: 1}, 2500, "Quad.easeInOut", true, self.letter_tween_delay);
+      self.letter_tween_delay += 300;
+    }).value();
+    console.log(this.title);
   },
 
   update: function() {
