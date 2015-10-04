@@ -23,13 +23,13 @@ Menu.prototype = {
     self.gradient_mask.height = self.game.height * 4;
     self.gradient_mask.alpha = 0.5;
 
-    glow_y = self.add.tween(self.gradient_mask.anchor).to(
+    self.add.tween(self.gradient_mask.anchor).to(
       {y: 0.25}, 10000, "Quad.easeOut", true, 0, -1, true);
 
-    glow_x = self.add.tween(self.gradient_mask.anchor).to(
+    self.add.tween(self.gradient_mask.anchor).to(
       {x: 0.25}, 15000, "Quad.easeOut", true, 0, -1, true);
 
-    glow_angle = self.add.tween(self.gradient_mask).to(
+    self.add.tween(self.gradient_mask).to(
       {angle: 360}, 20000, "Linear", true, 0, -1, false);
 
     //add the title
@@ -83,7 +83,7 @@ Menu.prototype = {
     this.glow.alpha = 0;
 
     transition_tween = this.game.add.tween(this.glow).to(
-      {alpha: 1}, 1200, "Quart.easeIn");
+      {alpha: 0.8}, 1200, "Quart.easeIn");
     transition_tween.onComplete.add(this.moveToPlay, this);
     transition_tween.start();
   },
