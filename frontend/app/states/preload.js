@@ -16,6 +16,7 @@ Preload.prototype = {
     //load our assets
     this.load.image("background", "static/assets/background.png");
     this.load.image("color_gradient", "static/assets/color_gradient.jpg");
+    this.load.image("transition", "static/assets/transition.jpeg");
     this.load.bitmapFont("glametrix", "static/assets/fonts/glametrix.png", "static/assets/fonts/glametrix.xml");
   },
 
