@@ -8,6 +8,7 @@ Play.prototype = {
   create: function() {
     var self = this;
 
+    /*
     self.bg = self.game.add.sprite(self.game.world.centerX,
                                    self.game.world.centerY,
                                    "play_bg");
@@ -50,10 +51,32 @@ Play.prototype = {
 
     self.add.tween(self.glow).to(
       {alpha: 0}, 1200, "Quart.easeOut", true);
+    */
+
+    self.game.stage.backgroundColor = "#124184";
+    self.game.physics.startSystem(Phaser.Physics.BOX2D);
+    self.game.physics.box2d.gravity.y = 400;
+    self.game.physics.box2d.restitution = 0.8;
+    self.game.physics.box2d.setBoundsToWorld();
+
+    self.ground = self.game.add.sprite(self.game.world.centerX,
+                                       self.game.world.height - 100,
+                                       "ground");
+    self.ground.width = self.game.width;
+    self.ground.height = 200;
+    self.game.physics.box2d.enable(self.ground);
+    self.ground.body.static = true;
+
+    self.circle = self.game.physics.box2d.createCircle(self.game.world.centerX,
+                                                       self.game.world.centerY,
+                                                       32);
+
 
   },
 
-  update: function() {
+  render: function() {
+    var self = this;
+    self.game.debug.box2dWorld();
 
   },
 
