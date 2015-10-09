@@ -20,6 +20,7 @@ Preload.prototype = {
     this.load.bitmapFont("glametrix", "static/assets/fonts/glametrix.png", "static/assets/fonts/glametrix.xml");
     this.load.image("play_bg", "static/assets/play_bg.png");
     this.load.image("play_gradient_mask", "static/assets/play_gradient_mask.jpg");
+    this.load.image("ground", "static/assets/ground.jpg");
   },
 
   create: function() {
