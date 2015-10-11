@@ -1,10 +1,11 @@
 var gulp = require('gulp'),
   browserify = require('browserify'),
   watchify = require('watchify'),
+  buffer = require('vinyl-buffer'),
   source = require('vinyl-source-stream'),
+  babelify = require('babelify'),
 
   sass = require('gulp-sass'),
-  ngHtml2Js = require('browserify-ng-html2js'),
 
   concat = require('gulp-concat'),
   queue = require('streamqueue'),
@@ -30,14 +31,12 @@ browserify = browserify(path.source + 'app.js', {
     baseDir: path.source,
     paths: ['./node_modules', './app']
   })
-  .transform(ngHtml2Js({
-    extension: 'html',
-    module: 'templates'
-  }));
+  .transform(babelify);
 
 bundle = function () {
   return browserify.bundle().on('error', logger)
     .pipe(source('bundle.js'))
+    .pipe(buffer())
     .pipe(gulp.dest(path.dest));
 };
 
