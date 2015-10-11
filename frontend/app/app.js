@@ -1,7 +1,7 @@
 require("angular/angular");
 require("angular-route/angular-route.js");
 
-_ = require("lodash");
+var _ = require("lodash");
 
 angular.module("tyton", [
   "ngRoute"

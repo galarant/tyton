@@ -30,6 +30,9 @@
     "watchify": "^3.2.3",
     "phaser": "~2.4.3",
     "p2": "~0.7.0",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "gulp-traceur": "~0.17.1",
+    "vinyl-buffer": "~1.0.0",
+    "babelify": "~6.3.0"
   }
 }
