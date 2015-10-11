@@ -1,78 +1,68 @@
-function MenuState() {}
+class MenuState extends Phaser.State {
 
-MenuState.prototype = {
+  preload() {}
 
-  preload: function() {
-  },
-
-  create: function() {
-    var self = this;
-
-    self.background = self.game.add.sprite(self.game.world.centerX,
-                                           self.game.world.centerY,
+  create() {
+    this.background = this.game.add.sprite(this.game.world.centerX,
+                                           this.game.world.centerY,
                                            "background");
-    self.background.anchor.setTo(0.5);
-    self.background.width = self.game.width;
-    self.background.height = self.game.height;
+    this.background.anchor.setTo(0.5);
+    this.background.width = this.game.width;
+    this.background.height = this.game.height;
 
-    self.gradient_mask = self.game.add.sprite(self.game.world.centerX,
-                                              self.game.world.centerY,
+    this.gradient_mask = this.game.add.sprite(this.game.world.centerX,
+                                              this.game.world.centerY,
                                               "color_gradient");
-    self.gradient_mask.anchor.setTo(0.75);
-    self.gradient_mask.width = self.game.width * 4;
-    self.gradient_mask.height = self.game.height * 4;
-    self.gradient_mask.alpha = 0.5;
+    this.gradient_mask.anchor.setTo(0.75);
+    this.gradient_mask.width = this.game.width * 4;
+    this.gradient_mask.height = this.game.height * 4;
+    this.gradient_mask.alpha = 0.5;
 
-    self.add.tween(self.gradient_mask.anchor).to(
+    this.add.tween(this.gradient_mask.anchor).to(
       {y: 0.25}, 10000, "Quad.easeOut", true, 0, -1, true);
 
-    self.add.tween(self.gradient_mask.anchor).to(
+    this.add.tween(this.gradient_mask.anchor).to(
       {x: 0.25}, 15000, "Quad.easeOut", true, 0, -1, true);
 
-    self.add.tween(self.gradient_mask).to(
+    this.add.tween(this.gradient_mask).to(
       {angle: 360}, 20000, "Linear", true, 0, -1, false);
 
     //add the title
-    self.title = self.game.add.bitmapText(self.game.world.centerX,
-                                          self.game.world.centerY,
+    this.title = this.game.add.bitmapText(this.game.world.centerX,
+                                          this.game.world.centerY,
                                           "glametrix",
                                           "TYTON",
                                           150);
-    self.title.anchor.setTo(0.5);
+    this.title.anchor.setTo(0.5);
 
     //animate the title letters
-    self.letter_tween_delay = 300;
-    _(self.title.children).forEach(function(letter) {
+    this.letter_tween_delay = 300;
+    _(this.title.children).forEach(function(letter) {
       letter.alpha = 0;
-      self.game.add.tween(letter).to(
-        {alpha: 1}, 2500, "Quad.easeInOut", true, self.letter_tween_delay);
-      self.letter_tween_delay += 300;
+      this.game.add.tween(letter).to(
+        {alpha: 1}, 2500, "Quad.easeInOut", true, this.letter_tween_delay);
+      this.letter_tween_delay += 300;
     }).value();
 
-    self.input.onDown.add(this.menuClick, this);
-  },
+    this.input.onDown.add(this.menuClick, this);
+  }
 
-  update: function() {
+  update() {}
 
-  },
+  resize() {
+    this.background.width = this.game.width;
+    this.background.height = this.game.height;
+    this.background.x = this.game.world.centerX;
+    this.background.y = this.game.world.centerY;
 
-  resize: function() {
+    this.gradient_mask.width = this.game.width * 4;
+    this.gradient_mask.height = this.game.height * 4;
 
-    self = this;
+    this.title.x = this.game.world.centerX;
+    this.title.y = this.game.world.centerY;
+  }
 
-    self.background.width = self.game.width;
-    self.background.height = self.game.height;
-    self.background.x = self.game.world.centerX;
-    self.background.y = self.game.world.centerY;
-
-    self.gradient_mask.width = self.game.width * 4;
-    self.gradient_mask.height = self.game.height * 4;
-
-    self.title.x = self.game.world.centerX;
-    self.title.y = self.game.world.centerY;
-  },
-
-  menuClick: function() {
+  menuClick() {
     this.glow = this.game.add.sprite(this.game.world.centerX,
                                      this.game.world.centerY,
                                      "transition");
@@ -86,12 +76,12 @@ MenuState.prototype = {
       {alpha: 0.8}, 1200, "Quart.easeIn");
     transition_tween.onComplete.add(this.moveToPlay, this);
     transition_tween.start();
-  },
+  }
 
-  moveToPlay: function() {
+  moveToPlay() {
     this.game.state.start("play");
   }
 
-};
+}
 
 export { MenuState };
