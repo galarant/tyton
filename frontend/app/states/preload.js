@@ -1,9 +1,11 @@
-function PreloadState() {
-  this.ready = false;
-}
+class PreloadState extends Phaser.State {
 
-PreloadState.prototype = {
-  preload: function() {
+  constructor() {
+    super();
+    this.ready = false;
+  }
+
+  preload() {
     //show the preloader while assets are loading
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
     this.preloader = this.add.sprite(this.game.world.centerX,
@@ -21,21 +23,22 @@ PreloadState.prototype = {
     this.load.image("play_bg", "static/assets/play_bg.png");
     this.load.image("play_gradient_mask", "static/assets/play_gradient_mask.jpg");
     this.load.image("ground", "static/assets/ground.jpg");
-  },
+  }
 
-  create: function() {
+  create() {
     this.preloader.cropEnabled = false;
-  },
+  }
 
-  update: function() {
+  update() {
     if(!!this.ready) {
       this.game.state.start('play');
     }
-  },
+  }
 
-  onLoadComplete: function() {
+  onLoadComplete() {
     this.ready = true;
   }
-};
+
+}
 
 export { PreloadState };
