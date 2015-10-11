@@ -1,7 +1,6 @@
 import 'angular/angular';
 import 'angular-route/angular-route.js';
 
-import _ from 'lodash';
 import { HomeController } from "./home/ctrl.js";
 
 angular.module("tyton", [

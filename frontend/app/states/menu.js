@@ -1,8 +1,11 @@
+import _ from 'lodash';
+
 class MenuState extends Phaser.State {
 
   preload() {}
 
   create() {
+    let game = this.game;
     this.background = this.game.add.sprite(this.game.world.centerX,
                                            this.game.world.centerY,
                                            "background");
@@ -36,12 +39,12 @@ class MenuState extends Phaser.State {
     this.title.anchor.setTo(0.5);
 
     //animate the title letters
-    this.letter_tween_delay = 300;
+    let letter_tween_delay = 300;
     _(this.title.children).forEach(function(letter) {
       letter.alpha = 0;
-      this.game.add.tween(letter).to(
-        {alpha: 1}, 2500, "Quad.easeInOut", true, this.letter_tween_delay);
-      this.letter_tween_delay += 300;
+      game.add.tween(letter).to(
+        {alpha: 1}, 2500, "Quad.easeInOut", true, letter_tween_delay);
+      letter_tween_delay += 300;
     }).value();
 
     this.input.onDown.add(this.menuClick, this);
@@ -72,7 +75,7 @@ class MenuState extends Phaser.State {
 
     this.glow.alpha = 0;
 
-    transition_tween = this.game.add.tween(this.glow).to(
+    let transition_tween = this.game.add.tween(this.glow).to(
       {alpha: 0.8}, 1200, "Quart.easeIn");
     transition_tween.onComplete.add(this.moveToPlay, this);
     transition_tween.start();
