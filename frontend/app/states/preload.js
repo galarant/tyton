@@ -1,8 +1,8 @@
-function Preload() {
+function PreloadState() {
   this.ready = false;
 }
 
-Preload.prototype = {
+PreloadState.prototype = {
   preload: function() {
     //show the preloader while assets are loading
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
@@ -38,4 +38,4 @@ Preload.prototype = {
   }
 };
 
-module.exports = Preload;
+export { PreloadState };
