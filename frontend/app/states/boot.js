@@ -1,7 +1,7 @@
-function Boot() {
+function BootState() {
 }
 
-Boot.prototype = {
+BootState.prototype = {
   preload: function() {
     this.game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
     this.game.scale.pageAlignVertically = true;
@@ -14,4 +14,4 @@ Boot.prototype = {
   }
 };
 
-module.exports = Boot;
+export { BootState };

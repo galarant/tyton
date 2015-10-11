@@ -1,7 +1,7 @@
-var BootState = require("../states/boot");
-var PreloadState = require("../states/preload");
-var MenuState = require("../states/menu");
-var PlayState = require("../states/play");
+import { BootState } from '../states/boot';
+import { PreloadState } from '../states/preload';
+import { MenuState } from '../states/menu';
+import { PlayState } from '../states/play';
 
 function HomeController ($location) {
 
@@ -17,6 +17,4 @@ function HomeController ($location) {
   game.state.start("boot");
 }
 
-angular.module("tyton").controller("HomeController", [
-  HomeController
-]);
+export { HomeController };

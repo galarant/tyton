@@ -1,6 +1,6 @@
-function Play() {}
+function PlayState() {}
 
-Play.prototype = {
+PlayState.prototype = {
 
   preload: function() {
   },
@@ -102,4 +102,4 @@ Play.prototype = {
   
 };
 
-module.exports = Play;
+export { PlayState };

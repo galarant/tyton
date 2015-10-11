@@ -1,6 +1,6 @@
-function Menu() {}
+function MenuState() {}
 
-Menu.prototype = {
+MenuState.prototype = {
 
   preload: function() {
   },
@@ -94,4 +94,4 @@ Menu.prototype = {
 
 };
 
-module.exports = Menu;
+export { MenuState };

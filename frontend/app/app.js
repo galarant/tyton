@@ -1,7 +1,8 @@
-require("angular/angular");
-require("angular-route/angular-route.js");
+import 'angular/angular';
+import 'angular-route/angular-route.js';
 
-var _ = require("lodash");
+import _ from 'lodash';
+import { HomeController } from "./home/ctrl.js";
 
 angular.module("tyton", [
   "ngRoute"
@@ -16,4 +17,5 @@ angular.module("tyton", [
       });
   }]);
 
-require("./home/ctrl.js");
+angular.module("tyton")
+  .controller("HomeController", [ HomeController ]);
