@@ -31,7 +31,7 @@ class PreloadState extends Phaser.State {
 
   update() {
     if(!!this.ready) {
-      this.game.state.start('menu');
+      this.game.state.start('play');
     }
   }
 

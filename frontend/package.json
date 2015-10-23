@@ -28,7 +28,7 @@
     "streamqueue": "^1.1.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.3",
-    "phaser": "~2.4.3",
+    "phaser": "2.4.4",
     "p2": "~0.7.0",
     "lodash": "~3.10.1",
     "gulp-traceur": "~0.17.1",

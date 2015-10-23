@@ -5,25 +5,58 @@ class PlayState extends Phaser.State {
   create() {
     this.game.stage.backgroundColor = "#124184";
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
-    this.game.physics.box2d.gravity.y = 400;
-    this.game.physics.box2d.restitution = 0.8;
+    this.game.physics.box2d.gravity.y = 1000;
+    this.game.physics.box2d.restitution = 0.4;
     this.game.physics.box2d.setBoundsToWorld();
 
-    this.ground = this.game.add.sprite(this.game.world.centerX,
-                                       this.game.world.height - 100,
-                                       "ground");
-    this.ground.width = this.game.width;
-    this.ground.height = 200;
-    this.game.physics.box2d.enable(this.ground);
-    this.ground.body.static = true;
+    this.game.physics.box2d.debugDraw.shapes = true;
+    this.game.physics.box2d.debugDraw.joints = true;
+    this.game.physics.box2d.debugDraw.aabbs = true;
+    this.game.physics.box2d.debugDraw.pairs = true;
+    this.game.physics.box2d.debugDraw.centerOfMass = true;
 
-    this.circle = this.game.physics.box2d.createCircle(this.game.world.centerX,
-                                                       this.game.world.centerY,
-                                                       32);
+    this.ground = new Phaser.Physics.Box2D.Body(this.game,
+                                                null,
+                                                this.game.world.centerX,
+                                                this.game.world.height - 50);
+    this.ground.setRectangle(this.game.world.width, 100);
+    this.ground.static = true;
+
+    this.circle = new Phaser.Physics.Box2D.Body(this.game,
+                                                null,
+                                                50,
+                                                this.game.world.centerY);
+    this.circle.setCircle(32);
+    this.barrier = new Phaser.Physics.Box2D.Body(this.game,
+                                                 null,
+                                                 this.game.world.width - 300,
+                                                 this.game.world.height - 200);
+    this.barrier.setRectangle(25, 200);
+    this.barrier.static = true;
+
+    this.circle.setBodyContactCallback(this.barrier, this.barrierContact, this);
+
+    this.cursors = this.game.input.keyboard.createCursorKeys();
   }
 
   update() {
     this.game.debug.box2dWorld();
+
+    if (this.cursors.left.isDown)
+    {
+      this.circle.velocity.x -= 20;
+    }
+
+    if (this.cursors.right.isDown)
+    {
+      this.circle.velocity.x += 20;
+    }
+  }
+
+  barrierContact(body1, body2, fixture1, fixture2, begin) {
+    if(begin) {
+      body2.destroy();
+    }
   }
 
   resize() {
