@@ -3,6 +3,8 @@ class PlayState extends Phaser.State {
   preload() {}
 
   create() {
+
+    this.game.world.setBounds(0, 0, this.game.world.width + 500, this.game.world.height);
     this.game.stage.backgroundColor = "#124184";
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
     this.game.physics.box2d.gravity.y = 1000;
@@ -24,9 +26,10 @@ class PlayState extends Phaser.State {
 
     this.circle = new Phaser.Physics.Box2D.Body(this.game,
                                                 null,
-                                                50,
-                                                this.game.world.centerY);
+                                                this.game.camera.x + this.game.camera.width / 2,
+                                                this.game.camera.y + 500);
     this.circle.setCircle(32);
+
     this.barrier = new Phaser.Physics.Box2D.Body(this.game,
                                                  null,
                                                  this.game.world.width - 300,
@@ -37,11 +40,16 @@ class PlayState extends Phaser.State {
     this.circle.setBodyContactCallback(this.barrier, this.barrierContact, this);
 
     this.cursors = this.game.input.keyboard.createCursorKeys();
+
+    this.game.camera.follow(this.circle);
   }
 
   update() {
+    //debug info
     this.game.debug.box2dWorld();
+    this.game.debug.cameraInfo(this.game.camera, 32, 32);
 
+    //handle inputs
     if (this.cursors.left.isDown)
     {
       this.circle.velocity.x -= 20;
