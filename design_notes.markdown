@@ -6,7 +6,10 @@ A user of the game.
 
 ## Tytons
 
-A Tyton represents the physical body of the User's character in the game world.
+A Tyton represents the User's desire to improve their life.
+The Tyton loves the User because the User loves herself.
+The Tyton will die if the User doesn't take action.
+They Tyton talks to the User and explains this.
 
 A User can have many Tytons, but the creation of a new Tyton implies restarting the game in a new slot.
 
