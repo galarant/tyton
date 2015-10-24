@@ -1,3 +1,5 @@
+import { Tyton } from '../lib/sprites/tyton';
+
 class PlayState extends Phaser.State {
 
   preload() {}
@@ -24,12 +26,6 @@ class PlayState extends Phaser.State {
     this.ground.setRectangle(this.game.world.width, 100);
     this.ground.static = true;
 
-    this.circle = new Phaser.Physics.Box2D.Body(this.game,
-                                                null,
-                                                this.game.camera.x + this.game.camera.width / 2,
-                                                this.game.camera.y + 500);
-    this.circle.setCircle(32);
-
     this.barrier = new Phaser.Physics.Box2D.Body(this.game,
                                                  null,
                                                  this.game.world.width - 300,
@@ -37,27 +33,32 @@ class PlayState extends Phaser.State {
     this.barrier.setRectangle(25, 200);
     this.barrier.static = true;
 
-    this.circle.setBodyContactCallback(this.barrier, this.barrierContact, this);
+    this.tyton = new Tyton(this.game);
+    this.tyton.body.setBodyContactCallback(this.barrier, this.barrierContact, this);
+    this.tyton_death_timer = this.game.time.create(true);
+    this.tyton_death_timer.add(10000, this.killTyton, this);
+    this.tyton_death_timer.start();
 
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
-    this.game.camera.follow(this.circle);
+    this.game.camera.follow(this.tyton);
   }
 
   update() {
     //debug info
     this.game.debug.box2dWorld();
     this.game.debug.cameraInfo(this.game.camera, 32, 32);
+    this.game.debug.timer(this.tyton_death_timer, 32, 150);
 
     //handle inputs
     if (this.cursors.left.isDown)
     {
-      this.circle.velocity.x -= 20;
+      this.tyton.body.velocity.x -= 20;
     }
 
     if (this.cursors.right.isDown)
     {
-      this.circle.velocity.x += 20;
+      this.tyton.body.velocity.x += 20;
     }
   }
 
@@ -65,6 +66,10 @@ class PlayState extends Phaser.State {
     if(begin) {
       body2.destroy();
     }
+  }
+
+  killTyton() {
+    this.tyton.destroy();
   }
 
   resize() {
