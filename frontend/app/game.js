@@ -7,6 +7,8 @@ class TytonGame extends Phaser.Game {
 
   constructor() {
     super('100%', '100%', Phaser.AUTO, '');
+
+    //add states
     this.state.add('boot', BootState);
     this.state.add('preload', PreloadState);
     this.state.add('menu', MenuState);
