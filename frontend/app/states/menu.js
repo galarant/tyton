@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { TytonPhrase } from 'lib/dialog/tyton_phrase';
 
 class MenuState extends Phaser.State {
 
@@ -31,21 +32,8 @@ class MenuState extends Phaser.State {
       {angle: 360}, 20000, "Linear", true, 0, -1, false);
 
     //add the title
-    this.title = this.game.add.bitmapText(this.game.world.centerX,
-                                          this.game.world.centerY,
-                                          "glametrix",
-                                          "TYTON",
-                                          150);
-    this.title.anchor.setTo(0.5);
-
-    //animate the title letters
-    let letter_tween_delay = 300;
-    _(this.title.children).forEach(function(letter) {
-      letter.alpha = 0;
-      game.add.tween(letter).to(
-        {alpha: 1}, 2500, "Quad.easeInOut", true, letter_tween_delay);
-      letter_tween_delay += 300;
-    }).value();
+    let phrase = new TytonPhrase(this.game, "TYTON", 150, 300);
+    phrase.show();
 
     this.input.onDown.add(this.menuClick, this);
   }

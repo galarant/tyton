@@ -1,6 +1,8 @@
-import { Tyton } from '../lib/sprites/tyton';
-import { Ground } from '../lib/sprites/ground';
-import { PlayBg } from '../lib/sprites/play_bg';
+import { Tyton } from 'lib/sprites/tyton';
+import { Ground } from 'lib/sprites/ground';
+import { PlayBg } from 'lib/sprites/play_bg';
+
+import { TytonPhrase } from 'lib/dialog/tyton_phrase';
 
 class PlayState extends Phaser.State {
 
@@ -17,7 +19,7 @@ class PlayState extends Phaser.State {
 
     //config physics
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
-    this.game.physics.box2d.gravity.y = 300;
+    this.game.physics.box2d.gravity.y = 500;
     this.game.physics.box2d.setBoundsToWorld();
 
     //config game debug
