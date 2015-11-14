@@ -33,6 +33,7 @@
     "lodash": "~3.10.1",
     "gulp-traceur": "~0.17.1",
     "vinyl-buffer": "~1.0.0",
-    "babelify": "~6.3.0"
+    "babelify": "~6.3.0",
+    "babel-polyfill": "~6.1.19"
   }
 }
