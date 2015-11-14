@@ -2,8 +2,6 @@ import { Tyton } from 'lib/sprites/tyton';
 import { Ground } from 'lib/sprites/ground';
 import { PlayBg } from 'lib/sprites/play_bg';
 
-import { TytonPhrase } from 'lib/dialog/tyton_phrase';
-
 class PlayState extends Phaser.State {
 
   preload() {}
@@ -33,13 +31,20 @@ class PlayState extends Phaser.State {
     this.game.play_bg = new PlayBg(this.game);
     this.game.ground = new Ground(this.game);
     this.game.tyton = new Tyton(this.game);
-
+    this.game.tyton.body.setBodyContactCallback(this.game.ground,
+                                                this.ground_contact_handler,
+                                                this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
   }
 
   update() {
     //debug info
     //this.game.debug.box2dWorld();
     //this.game.debug.cameraInfo(this.game.camera, 32, 32);
+  }
+
+  start_game() {
+    this.game.tyton.start_speaking(["Hello", "World"]);
   }
 
 }

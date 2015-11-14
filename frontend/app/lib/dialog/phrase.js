@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
-class TytonPhrase extends Phaser.BitmapText {
+class Phrase extends Phaser.BitmapText {
 
-  constructor(game, phrase, font_size = 150, speed = 200) {
+  constructor(game, phrase, font_size=150, frames=200) {
 
     super(game,
           game.world.centerX,
@@ -17,13 +17,16 @@ class TytonPhrase extends Phaser.BitmapText {
     _(this.children).forEach(function(letter) {
         letter.alpha = 0;
         letter.show_tween = game.add.tween(letter).to(
-          {alpha: 1}, speed * 8, "Quad.easeInOut", false, letter_delay);
-        letter_delay += speed;
+          {alpha: 1}, frames * 8, "Quad.easeInOut", false, letter_delay);
+        letter_delay += frames;
       }
     ).value();
 
     //world attributes
     game.world.add(this);
+
+    //object attributes
+    this.frames = frames;
 
   }
 
@@ -36,4 +39,4 @@ class TytonPhrase extends Phaser.BitmapText {
 
 }
 
-export { TytonPhrase };
+export { Phrase };
