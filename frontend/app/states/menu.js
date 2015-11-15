@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { Phrase } from 'lib/dialog/phrase';
+import { Phrase } from 'lib/interface/phrase';
 
 class MenuState extends Phaser.State {
 

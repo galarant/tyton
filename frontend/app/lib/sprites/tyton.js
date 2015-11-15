@@ -1,5 +1,5 @@
-import { Phrase } from 'lib/dialog/phrase';
-import { Dialog } from 'lib/dialog/dialog';
+import { Phrase } from 'lib/interface/phrase';
+import { Dialog } from 'lib/interface/dialog';
 
 class Tyton extends Phaser.Sprite {
 
