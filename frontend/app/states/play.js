@@ -1,6 +1,7 @@
 import { Tyton } from 'lib/sprites/tyton';
 import { Ground } from 'lib/sprites/ground';
 import { PlayBg } from 'lib/sprites/play_bg';
+import { Countdown } from 'lib/interface/countdown';
 
 class PlayState extends Phaser.State {
 
@@ -35,6 +36,8 @@ class PlayState extends Phaser.State {
                                                 this.ground_contact_handler,
                                                 this);
     this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
+
+    this.game.countdown = new Countdown(this.game);
   }
 
   update() {
@@ -44,7 +47,7 @@ class PlayState extends Phaser.State {
   }
 
   start_game() {
-    this.game.tyton.start_speaking(["Hello", "World"]);
+    this.game.tyton.say(["Hello", "World"]);
   }
 
 }
