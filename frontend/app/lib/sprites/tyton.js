@@ -63,6 +63,10 @@ class Tyton extends Phaser.Sprite {
     this.body.static = false;
   }
 
+  say(strings) {
+    this.start_speaking(strings);
+  }
+
 }
 
 export { Tyton };
