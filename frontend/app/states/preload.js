@@ -16,13 +16,21 @@ class PreloadState extends Phaser.State {
     this.load.setPreloadSprite(this.preloader);
 
     //load our assets
+
+    //menu assets
     this.load.image("background", "static/assets/background.png");
     this.load.image("color_gradient", "static/assets/color_gradient.jpg");
+
+    //game world assets
     this.load.image("world_bg", "static/assets/world_bg.jpg");
     this.load.image("transition", "static/assets/transition.jpeg");
     this.load.image("play_bg", "static/assets/play_bg.jpg");
     this.load.image("ground", "static/assets/ground.jpg");
     this.load.image("tyton", "static/assets/tyton.png");
+
+    //lib assets
+    this.load.image("squircle", "static/assets/squircle.png");
+
     this.load.bitmapFont("glametrix", "static/assets/fonts/glametrix.png", "static/assets/fonts/glametrix.xml");
 
   }
