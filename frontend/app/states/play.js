@@ -2,10 +2,13 @@ import { Tyton } from 'lib/sprites/tyton';
 import { Ground } from 'lib/sprites/ground';
 import { PlayBg } from 'lib/sprites/play_bg';
 import { Countdown } from 'lib/interface/countdown';
+import { Modal } from 'lib/interface/modal';
 
 class PlayState extends Phaser.State {
 
-  preload() {}
+  preload() {
+    this.game.input.maxPointers = 1;
+  }
 
   create() {
 
@@ -38,6 +41,9 @@ class PlayState extends Phaser.State {
     this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
 
     this.game.countdown = new Countdown(this.game);
+    this.game.time.events.add(Phaser.Timer.SECOND * 1.5, function() {
+      this.game.modal = new Modal(this.game);
+    }, this);
   }
 
   update() {
