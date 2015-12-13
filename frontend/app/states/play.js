@@ -7,7 +7,22 @@ import { Modal } from 'lib/interface/modal';
 class PlayState extends Phaser.State {
 
   preload() {
+    //global input config
     this.game.input.maxPointers = 1;
+    this.game.input.justReleasedRate = 30;
+
+    //global orientation config
+    this.game.scale.forceOrientation(true, false);
+
+    this.game.scale.enterIncorrectOrientation.add(function() {
+      this.game.modal = new Modal(this,
+                                  "TO PLAY TYTON, PLEASE ROTATE YOUR DEVICE TO LANDSCAPE MODE",
+                                  1.0, Phaser.Timer.SECOND * 0.01, false);
+    }, this);
+
+    this.game.scale.leaveIncorrectOrientation.add(function() {
+      this.game.modal.close();
+    }, this);
   }
 
   create() {
@@ -41,9 +56,11 @@ class PlayState extends Phaser.State {
     this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
 
     this.game.countdown = new Countdown(this.game);
-    this.game.time.events.add(Phaser.Timer.SECOND * 1.5, function() {
-      this.game.modal = new Modal(this.game);
+    /*
+    this.game.time.events.add(Phaser.Timer.SECOND * 1.0, function() {
+      this.game.modal = new Modal(this);
     }, this);
+    */
   }
 
   update() {
@@ -54,6 +71,18 @@ class PlayState extends Phaser.State {
 
   start_game() {
     this.game.tyton.say(["Hello", "World"]);
+  }
+
+  resize() {
+    if (this.game.portrait_modal) {
+      this.game.portrait_modal.resize();
+    }
+  }
+
+  pauseUpdate() {
+    if (this.game.modal) {
+      this.game.modal.update();
+    }
   }
 
 }
