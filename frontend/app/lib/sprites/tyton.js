@@ -20,7 +20,6 @@ class Tyton extends Phaser.Sprite {
     //game world attributes
     game.world.add(this);
     game.camera.follow(this);
-    game.input.onTap.add(this.speak, this);
 
     //object attributes
     this.dialog = null;
@@ -36,6 +35,12 @@ class Tyton extends Phaser.Sprite {
     if (this.game.cursors.right.isDown)
     {
       this.body.applyForce(40,0);
+    }
+
+    if (this.game &&
+        this.game.input.activePointer &&
+        this.game.input.activePointer.justReleased()) {
+      this.speak();
     }
 
   }

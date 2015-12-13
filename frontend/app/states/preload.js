@@ -30,7 +30,7 @@ class PreloadState extends Phaser.State {
 
     //lib assets
     this.load.image("squircle", "static/assets/squircle.png");
-
+    this.load.image("darken", "static/assets/darken.png");
     this.load.bitmapFont("glametrix", "static/assets/fonts/glametrix.png", "static/assets/fonts/glametrix.xml");
 
   }
