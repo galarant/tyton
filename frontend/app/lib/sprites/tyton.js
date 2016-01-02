@@ -15,7 +15,7 @@ class Tyton extends Phaser.Sprite {
     //physics attributes
     game.physics.box2d.enable(this);
     this.body.setCircle(this.width / 1.5);
-    this.body.static = true;
+    // this.body.static = true;
 
     //game world attributes
     game.world.add(this);
@@ -29,12 +29,17 @@ class Tyton extends Phaser.Sprite {
     //handle inputs
     if (this.game.cursors.left.isDown)
     {
-      this.body.applyForce(-40,0);
+      this.body.applyForce(-400,0);
     }
 
     if (this.game.cursors.right.isDown)
     {
-      this.body.applyForce(40,0);
+      this.body.applyForce(400,0);
+    }
+
+    if (this.game.cursors.up.isDown)
+    {
+      this.body.applyForce(0, -375);
     }
 
     if (this.game &&
