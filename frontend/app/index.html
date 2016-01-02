@@ -3,12 +3,10 @@
   <head>
     <title>tyton</title>
 
-    <!-- Have to include Phaser via script tag due to a shitty bug -->
+    <!-- Have to include Phaser via script tag due to an incompatibility with Browserify -->
     <!-- Have to include Phaser.Box2D via script tag because it's a commercial lib -->
-    <!-- Have to include babel-polyfill via script tag because magick -->
-    <script type="text/javascript" src="/static/phaser/dist/phaser.min.js" defer></script>
-    <script type="text/javascript" src="/static/phaser-box2d/dist/testing/box2d-plugin-full.js" defer></script>
-    <script type="text/javascript" src="/static/babel-polyfill/dist/polyfill.js" defer></script>
+    <script type="text/javascript" src="/static/vendor/phaser/dist/phaser.min.js" defer></script>
+    <script type="text/javascript" src="/static/vendor/box2d-plugin-full.min.js" defer></script>
 
     <!-- Bundled Resources -->
     <link rel="icon" href="/static/assets/favicon.ico">

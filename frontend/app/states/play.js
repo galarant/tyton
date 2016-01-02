@@ -3,6 +3,7 @@ import { Ground } from 'lib/sprites/ground';
 import { PlayBg } from 'lib/sprites/play_bg';
 import { Countdown } from 'lib/interface/countdown';
 import { Modal } from 'lib/interface/modal';
+import { Keyboard } from 'lib/interface/keyboard/keyboard';
 
 class PlayState extends Phaser.State {
 
@@ -61,6 +62,7 @@ class PlayState extends Phaser.State {
       this.game.modal = new Modal(this);
     }, this);
     */
+    //this.keyboard = new Keyboard(this); //TODO: left off here
   }
 
   update() {
@@ -70,7 +72,7 @@ class PlayState extends Phaser.State {
   }
 
   start_game() {
-    this.game.tyton.say(["Hello", "World"]);
+    //this.game.tyton.say(["Hello", "World"]);
   }
 
   resize() {

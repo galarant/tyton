@@ -1,39 +1,32 @@
-import _ from "lodash";
-
 class Modal extends Phaser.Group {
 
-  constructor(state, message_text="PAUSED", alpha=0.9, fade_duration=Phaser.Timer.SECOND * 0.5, close_on_tap=true, pause=true) {
+  constructor(state, message_text="PAUSED", alpha=0.9, fade_duration=Phaser.Timer.SECOND * 0.5, close_on_tap=true) {
 
     //group attributes
     super(state, state.world);
+    this.game = state.game;
 
     //define children
-    this.state = state;
-    this.game = this.state.game;
     this.darken = new Phaser.Sprite(this.game, 0, 0, "darken");
     this.darken.width = this.game.camera.width;
     this.darken.height = this.game.camera.height;
     this.darken.alpha = 0;
     this.addChild(this.darken);
-    this.tweens = new Phaser.TweenManager(this.game);
 
     //custom attributes and init methods
     this.message_text = message_text;
     this.fade_duration = fade_duration;
     this.alpha = alpha;
     this.close_on_tap = close_on_tap;
+    this.tweens = new Phaser.TweenManager(this.game);
 
     this.tween_alpha(this.darken, `+${this.alpha}`, this.show_message, this);
-
-    if (pause) {
-      //this.state.pauseUpdate = function() { this.update(); };
-      this.game.paused = true;
-    }
+    this.game.paused = true;
 
   }
 
   tween_alpha(sprite, tween_to, callback, callback_context) {
-    let alpha_tween = this.state.add.tween(sprite).to({alpha: tween_to}, this.fade_duration, "Linear", true);
+    let alpha_tween = this.game.add.tween(sprite).to({alpha: tween_to}, this.fade_duration, "Linear", true);
     if (callback)
       alpha_tween.onComplete.add(callback, callback_context);
     this.tweens.add(alpha_tween);
