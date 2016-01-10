@@ -52,18 +52,14 @@ class Key extends Phaser.Group {
     this.squircle.events.onInputDown.add(on_down_fill, this);
 
     if (key_code) {
-      try {
-        let key = this.game.input.keyboard.addKey(eval("Phaser.KeyCode." + this.key_code));
-        key.onDown.add(on_down, on_down_context);
-        key.onDown.add(on_down_fill, this);
-      } catch(err) {
-        console.warn("Cannot evaluate Phaser.KeyCode." + key_code);
-      }
+      let key = this.game.input.keyboard.addKey(this.key_code);
+      key.onDown.add(on_down, on_down_context);
+      key.onDown.add(on_down_fill, this);
     }
   }
 
   destroy() {
-    let key = this.game.input.keyboard.removeKey(eval("Phaser.KeyCode." + this.key_code));
+    let key = this.game.input.keyboard.removeKey(this.key_code);
     this.squircle.events.onInputDown.removeAll();
     super.destroy();
   }
