@@ -50,6 +50,7 @@ class PlayState extends Phaser.State {
     //add game objects
     this.game.play_bg = new PlayBg(this.game);
     this.game.ground = new Ground(this.game);
+    /*
     this.game.tyton = new Tyton(this.game);
     this.game.tyton.body.setBodyContactCallback(this.game.ground,
                                                 this.ground_contact_handler,
@@ -57,12 +58,11 @@ class PlayState extends Phaser.State {
     this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
 
     this.game.countdown = new Countdown(this.game);
-    /*
     this.game.time.events.add(Phaser.Timer.SECOND * 1.0, function() {
       this.game.modal = new Modal(this);
     }, this);
     */
-    //this.keyboard = new Keyboard(this); //TODO: left off here
+    this.keyboard = new Keyboard(this);
   }
 
   update() {
