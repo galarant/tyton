@@ -11,6 +11,9 @@ class Tyton extends Phaser.Sprite {
           "tyton");
     this.width = 120;
     this.height = 120;
+    this.health = 100;
+    this.power = 0;
+    this.alive = true;
 
     //physics attributes
     game.physics.box2d.enable(this);
@@ -23,6 +26,13 @@ class Tyton extends Phaser.Sprite {
 
     //object attributes
     this.dialog = null;
+
+    //key mappings
+    this.successKey = game.input.keyboard.addKey(Phaser.KeyCode.S);
+    this.successKey.onDown.add(this.succeed_task, this);
+
+    this.failureKey = game.input.keyboard.addKey(Phaser.KeyCode.F);
+    this.failureKey.onDown.add(this.fail_task, this);
   }
 
   update() {
@@ -48,6 +58,7 @@ class Tyton extends Phaser.Sprite {
       this.speak();
     }
 
+    this.check_health();
   }
 
   start_speaking(strings) {
@@ -75,6 +86,30 @@ class Tyton extends Phaser.Sprite {
 
   say(strings) {
     this.start_speaking(strings);
+  }
+
+  check_health () {
+    if (this.health <= 0 && this.alive) {
+      this.die();
+    }
+  }
+  succeed_task() {
+    this.health += 10;
+    this.power += 10;
+  }
+
+  take_damage(damage) {
+    this.health -= damage;
+  }
+
+  fail_task() {
+    let task_damage = 10;
+    this.take_damage(task_damage);
+  }
+
+  die() {
+    this.alive = false;
+    console.log("I'm dead.");
   }
 
 }
