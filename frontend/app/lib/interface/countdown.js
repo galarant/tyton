@@ -1,26 +1,19 @@
-import moment from 'moment/moment';
-import 'moment-duration-format/lib/moment-duration-format';
+import moment from "moment/moment";
+import "moment-duration-format/lib/moment-duration-format";
 
 class Countdown extends Phaser.BitmapText {
 
-  constructor(game, duration=70, font_size=80) {
+  constructor(state, x, y, font_size, duration) {
 
-    super(game,
-          game.camera.width,
-          10,
-          "glametrix",
+    super(state.game,
+          x,
+          y,
+          "proxima_nova",
           '',
           font_size);
 
-    //sprite attributes
-    this.fixedtoCamera = true;
-
-    //world attributes
-    game.world.add(this);
-
     //object attributes
     this.expires_at = moment().add(duration, 'seconds');
-    this.update();
   }
 
   update() {
@@ -30,15 +23,12 @@ class Countdown extends Phaser.BitmapText {
 
     if (seconds_left >= 3600) {
       this.tint = 0xFFFFFF;
-      this.x = this.game.camera.width - 160;
     }
     else if (seconds_left >= 60) {
       this.tint = 0xFFFFFF;
-      this.x = this.game.camera.width - 130;
     }
     else if (seconds_left > 0) {
       this.tint = 0xFF0000;
-      this.x = this.game.camera.width - 90;
     }
     else {
       this.expire();
@@ -49,8 +39,12 @@ class Countdown extends Phaser.BitmapText {
   }
 
   expire() {
-    console.log('countdown expired!');
-    this.destroy();
+    if (this.parent.expire) {
+      this.parent.expire();
+    } else {
+      console.log('countdown expired!');
+      this.destroy();
+    }
   }
 
 }
