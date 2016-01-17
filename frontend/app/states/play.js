@@ -1,11 +1,11 @@
 import _ from "lodash";
 
-import { Tyton } from 'lib/sprites/tyton';
-import { Ground } from 'lib/sprites/ground';
-import { PlayBg } from 'lib/sprites/play_bg';
-import { Countdown } from 'lib/interface/countdown';
-import { Modal } from 'lib/interface/modal';
-import { Keyboard } from 'lib/interface/keyboard/keyboard';
+import { Tyton } from "lib/sprites/tyton";
+import { Ground } from "lib/sprites/ground";
+import { PlayBg } from "lib/sprites/play_bg";
+import { Modal } from "lib/interface/modal";
+import { Keyboard } from "lib/interface/keyboard/keyboard";
+import { Task } from "lib/sprites/task";
 
 class PlayState extends Phaser.State {
 
@@ -13,19 +13,24 @@ class PlayState extends Phaser.State {
     //global input config
     this.game.input.maxPointers = 1;
     this.game.input.justReleasedRate = 30;
+    this.game.font_size = this.game.camera.width / 25;
 
     //global orientation config
+    /*
     this.game.scale.forceOrientation(true, false);
 
     this.game.scale.enterIncorrectOrientation.add(function() {
-      this.game.modal = new Modal(this,
-                                  "TO PLAY TYTON, PLEASE ROTATE YOUR DEVICE TO LANDSCAPE MODE",
-                                  1.0, Phaser.Timer.SECOND * 0.01, false);
+      let orientation_message = new Phaser.BitmapText(this.game,
+        this.game.camera.x + this.game.camera.width / 2,
+        this.game.camera.y + this.game.camera.height / 2,
+        "proxima_nova", "TO PLAY TYTON\nPLEASE PUT YOUR DEVICE IN LANDSCAPE MODE", 60);
+      this.game.modal = new Modal(this, orientation_message, 1.0, Phaser.Timer.SECOND*0.01);
     }, this);
 
     this.game.scale.leaveIncorrectOrientation.add(function() {
       this.game.modal.close();
     }, this);
+    */
   }
 
   create() {
@@ -45,42 +50,22 @@ class PlayState extends Phaser.State {
     //config game debug
     this.game.physics.box2d.debugDraw.shapes = true;
     this.game.physics.box2d.debugDraw.joints = true;
-    //this.game.physics.box2d.debugDraw.aabbs = true;
     this.game.physics.box2d.debugDraw.pairs = true;
     this.game.physics.box2d.debugDraw.centerOfMass = true;
 
     //add game objects
-    this.game.play_bg = new PlayBg(this.game);
+    this.play_bg = new PlayBg(this.game);
     this.game.ground = new Ground(this.game);
-    //this.keyboard = new Keyboard(this);
 
-    this.game.tyton = new Tyton(this.game);
-    this.game.tyton.body.setBodyContactCallback(this.game.ground,
-                                                this.ground_contact_handler,
-                                                this);
-    //this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
+    this.tyton = new Tyton(this.game);
+    this.task = new Task(this);
 
-    this.game.countdown = new Countdown(this.game);
-    this.game.time.events.add(Phaser.Timer.SECOND * 1.0, function() {
-      let keyboard = new Keyboard(this);
-      this.game.modal = new Modal(this, 0.9, Phaser.Timer.SECOND * 0.5, keyboard);
-      this.game.modal.submit_signal.addOnce(this.log_modal_return_value, this);
-    }, this);
-    this.logged = false;
-  }
-
-  log_modal_return_value(modal_return_value) {
-    this.game.tyton.say(_.words(modal_return_value));
   }
 
   update() {
     //debug info
     //this.game.debug.box2dWorld();
     //this.game.debug.cameraInfo(this.game.camera, 32, 32);
-  }
-
-  start_game() {
-    this.game.tyton.say(["Hello", "World"]);
   }
 
   resize() {
