@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { Tyton } from 'lib/sprites/tyton';
 import { Ground } from 'lib/sprites/ground';
 import { PlayBg } from 'lib/sprites/play_bg';
@@ -50,19 +52,25 @@ class PlayState extends Phaser.State {
     //add game objects
     this.game.play_bg = new PlayBg(this.game);
     this.game.ground = new Ground(this.game);
-    /*
+    //this.keyboard = new Keyboard(this);
+
     this.game.tyton = new Tyton(this.game);
     this.game.tyton.body.setBodyContactCallback(this.game.ground,
                                                 this.ground_contact_handler,
                                                 this);
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
+    //this.game.time.events.add(Phaser.Timer.SECOND * 0.5, this.start_game, this);
 
     this.game.countdown = new Countdown(this.game);
     this.game.time.events.add(Phaser.Timer.SECOND * 1.0, function() {
-      this.game.modal = new Modal(this);
+      let keyboard = new Keyboard(this);
+      this.game.modal = new Modal(this, 0.9, Phaser.Timer.SECOND * 0.5, keyboard);
+      this.game.modal.submit_signal.addOnce(this.log_modal_return_value, this);
     }, this);
-    */
-    this.keyboard = new Keyboard(this);
+    this.logged = false;
+  }
+
+  log_modal_return_value(modal_return_value) {
+    this.game.tyton.say(_.words(modal_return_value));
   }
 
   update() {
@@ -72,7 +80,7 @@ class PlayState extends Phaser.State {
   }
 
   start_game() {
-    //this.game.tyton.say(["Hello", "World"]);
+    this.game.tyton.say(["Hello", "World"]);
   }
 
   resize() {
