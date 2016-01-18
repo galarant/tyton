@@ -58,7 +58,8 @@ class PlayState extends Phaser.State {
     this.game.ground = new Ground(this.game);
 
     this.tyton = new Tyton(this.game);
-    this.task = new Task(this);
+    this.task = new Task(this, this.game.font_size, 5);
+    this.task.expiry_signal.addOnce(this.task_expired, this);
 
   }
 
@@ -78,6 +79,11 @@ class PlayState extends Phaser.State {
     if (this.game.modal) {
       this.game.modal.update();
     }
+  }
+
+  task_expired() {
+    this.task.destroy();
+    this.tyton.say(["YOU DID BAD"]);
   }
 
 }
