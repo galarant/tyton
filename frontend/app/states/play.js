@@ -16,21 +16,25 @@ class PlayState extends Phaser.State {
     this.game.font_size = this.game.camera.width / 25;
 
     //global orientation config
-    /*
     this.game.scale.forceOrientation(true, false);
 
     this.game.scale.enterIncorrectOrientation.add(function() {
-      let orientation_message = new Phaser.BitmapText(this.game,
-        this.game.camera.x + this.game.camera.width / 2,
-        this.game.camera.y + this.game.camera.height / 2,
-        "proxima_nova", "TO PLAY TYTON\nPLEASE PUT YOUR DEVICE IN LANDSCAPE MODE", 60);
-      this.game.modal = new Modal(this, orientation_message, 1.0, Phaser.Timer.SECOND*0.01);
+      let orientation_message = new Phaser.BitmapText(this.game, 0, 0,
+        "proxima_nova", "TO PLAY TYTON\nPLEASE PUT YOUR DEVICE\nIN LANDSCAPE MODE", this.game.font_size * 1.5, "center");
+      orientation_message.anchor.setTo(0.5, 0.5);
+      this.game.modal = new Modal(this, orientation_message, 1.0, Phaser.Timer.SECOND * 0.01, this.game.scale.leaveIncorrectOrientation);
+      this.game.modal.intrface.update = function() {
+        //only do this if we are in portrait
+        if (this.game.camera.width < this.game.camera.height) {
+          this.game.modal.intrface.x = this.game.camera.width / 2;
+          this.game.modal.intrface.y = this.game.camera.height / 2;
+        }
+      };
     }, this);
 
     this.game.scale.leaveIncorrectOrientation.add(function() {
       this.game.modal.close();
     }, this);
-    */
   }
 
   create() {
@@ -58,8 +62,8 @@ class PlayState extends Phaser.State {
     this.game.ground = new Ground(this.game);
 
     this.tyton = new Tyton(this.game);
-    this.task = new Task(this, this.game.font_size, 5);
-    this.task.expiry_signal.addOnce(this.task_expired, this);
+    //this.task = new Task(this, this.game.font_size, 5);
+    //this.task.expiry_signal.addOnce(this.task_expired, this);
 
   }
 

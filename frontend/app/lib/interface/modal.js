@@ -1,7 +1,7 @@
 class Modal extends Phaser.Group {
 
   constructor(state, intrface=null, alpha=0.9,
-              fade_duration=Phaser.Timer.SECOND*0.5, close_signal=null, closable=true) {
+              fade_duration=Phaser.Timer.SECOND*0.5, close_signal=null) {
 
     //group attributes
     super(state.game, state.world);
@@ -17,6 +17,8 @@ class Modal extends Phaser.Group {
     this.darken.height = state.game.camera.height;
     this.darken.alpha = 0;
     this.addChild(this.darken);
+    this.fixedToCamera = true;
+    this.cameraOffset = new Phaser.Point(0, 0);
 
     //modal interface
     if (!intrface) {
@@ -25,11 +27,6 @@ class Modal extends Phaser.Group {
         state.game.camera.y + state.game.camera.height / 2,
         "proxima_nova", "PAUSED", 60);
       this.intrface.anchor.setTo(0.5, 0.5);
-      this.intrface.update = function() {
-        this.x = state.game.camera.x + state.game.camera.width / 2;
-        this.y = state.game.camera.y + state.game.camera.height / 2;
-        this.anchor.setTo(0.5, 0.5);
-      };
     } else {
       this.intrface = intrface;
     }
@@ -37,16 +34,14 @@ class Modal extends Phaser.Group {
     this.addChild(this.intrface);
 
     //close event
-    if (closable) {
-      if (this.close_signal) {
-        //add a listener for the close signal if one was passed
-        close_signal.addOnce(this.close, this);
-      } else if (this.intrface && this.intrface.submit_signal) {
-        this.intrface.submit_signal.addOnce(this.close, this);
-      } else {
-        //otherwise default to close on click
-        state.game.input.onDown.addOnce(this.close, this);
-      }
+    if (this.close_signal) {
+      //add a listener for the close signal if one was passed
+      close_signal.addOnce(this.close, this);
+    } else if (this.intrface && this.intrface.submit_signal) {
+      this.intrface.submit_signal.addOnce(this.close, this);
+    } else {
+      //otherwise default to close on click
+      state.game.input.onDown.addOnce(this.close, this);
     }
 
     this.tween_alpha(this.darken, `+${this.alpha}`, this.show_intrface, this);
