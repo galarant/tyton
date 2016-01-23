@@ -6,6 +6,7 @@ import { PlayBg } from "lib/sprites/play_bg";
 import { Modal } from "lib/interface/modal";
 import { Keyboard } from "lib/interface/keyboard/keyboard";
 import { Task } from "lib/sprites/task";
+import { Dialog } from "lib/interface/dialog";
 
 class PlayState extends Phaser.State {
 
@@ -43,7 +44,6 @@ class PlayState extends Phaser.State {
     this.game.cursors = this.game.input.keyboard.createCursorKeys();
 
     //config game world
-    this.stage.backgroundColor = "#000000";
     this.game.world.setBounds(0, 0, this.game.width, this.game.height);
 
     //config physics
@@ -64,6 +64,11 @@ class PlayState extends Phaser.State {
     this.tyton = new Tyton(this.game);
     //this.task = new Task(this, this.game.font_size, 5);
     //this.task.expiry_signal.addOnce(this.task_expired, this);
+    //this.test = new Dialog(this.camera, ["HELLO", "DIALOG", "WORLD"], this.game.font_size * 2);
+    //this.game.modal = new Modal(this,
+    //  new Dialog(this.camera, ["HELLO", "DIALOG", "WORLD"], this.game.font_size * 2));
+    //this.game.modal = new Modal(this, new Keyboard(this));
+    this.game.modal = new Modal(this);
 
   }
 
