@@ -20,7 +20,7 @@ class Modal extends Phaser.Group {
     this.fixedToCamera = true;
     this.cameraOffset = new Phaser.Point(0, 0);
 
-    //modal interface
+    //define interface
     if (!intrface) {
       this.intrface = new Phaser.BitmapText(state.game,
         state.game.camera.x + state.game.camera.width / 2,
@@ -33,16 +33,16 @@ class Modal extends Phaser.Group {
     this.intrface.alpha = 0;
     this.addChild(this.intrface);
 
-    //close event
+    //define close event
     if (this.close_signal) {
-      //add a listener for the close signal if one was passed
       close_signal.addOnce(this.close, this);
     } else if (this.intrface && this.intrface.submit_signal) {
       this.intrface.submit_signal.addOnce(this.close, this);
     } else {
-      //otherwise default to close on click
       state.game.input.onDown.addOnce(this.close, this);
     }
+
+    this.state.game.modal = this;
 
     this.tween_alpha(this.darken, `+${this.alpha}`, this.show_intrface, this);
     this.state.paused = true;

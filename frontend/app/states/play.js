@@ -68,7 +68,7 @@ class PlayState extends Phaser.State {
     //this.game.modal = new Modal(this,
     //  new Dialog(this.camera, ["HELLO", "DIALOG", "WORLD"], this.game.font_size * 2));
     //this.game.modal = new Modal(this, new Keyboard(this));
-    this.game.modal = new Modal(this);
+    this.test = new Modal(this);
 
   }
 
