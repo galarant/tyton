@@ -64,11 +64,7 @@ class PlayState extends Phaser.State {
     this.tyton = new Tyton(this.game);
     //this.task = new Task(this, this.game.font_size, 5);
     //this.task.expiry_signal.addOnce(this.task_expired, this);
-    //this.test = new Dialog(this.camera, ["HELLO", "DIALOG", "WORLD"], this.game.font_size * 2);
-    //this.game.modal = new Modal(this,
-    //  new Dialog(this.camera, ["HELLO", "DIALOG", "WORLD"], this.game.font_size * 2));
-    //this.game.modal = new Modal(this, new Keyboard(this));
-    this.test = new Modal(this);
+    this.test = new Modal(this.game, new Keyboard(this));
 
   }
 
@@ -76,18 +72,7 @@ class PlayState extends Phaser.State {
     //debug info
     //this.game.debug.box2dWorld();
     //this.game.debug.cameraInfo(this.game.camera, 32, 32);
-  }
-
-  resize() {
-    if (this.game.portrait_modal) {
-      this.game.portrait_modal.resize();
-    }
-  }
-
-  pauseUpdate() {
-    if (this.game.modal) {
-      this.game.modal.update();
-    }
+    this.game.font_size = this.game.camera.width / 25;
   }
 
   task_expired() {
