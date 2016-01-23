@@ -49,12 +49,6 @@ class Tyton extends Phaser.Sprite {
       this.body.applyForce(0, -375);
     }
 
-    if (this.game &&
-        this.game.input.activePointer &&
-        this.game.input.activePointer.justReleased()) {
-      this.speak();
-    }
-
     this.check_health();
   }
 
