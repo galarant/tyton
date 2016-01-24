@@ -3,13 +3,12 @@ import { Phrase } from "./phrase";
 
 class Dialog extends Phaser.Group {
 
-  constructor(camera, strings=[], font_size=60,
+  constructor(game, strings=[], font_size=60,
     fade_in_speed=Phaser.Timer.SECOND * 2.0, camera_offset=null) {
 
-    super(camera.game, camera.world);
+    super(game, game.world);
 
     //group attributes
-    this.camera = camera;
     this.font_size = font_size;
     this.fade_in_speed = fade_in_speed;
     this.phrases = _.map(strings, this.string_to_phrase, this);
@@ -19,10 +18,10 @@ class Dialog extends Phaser.Group {
     if (camera_offset) {
       this.cameraOffset = camera_offset;
     } else {
-      this.cameraOffset = new Phaser.Point(this.camera.width / 2, this.camera.height / 2);
+      this.cameraOffset = new Phaser.Point(game.camera.width / 2, game.camera.height / 2);
     }
     this.current_phrase = null;
-    this.on_down_binding = this.camera.game.input.onDown.add(this.next, this);
+    this.on_down_binding = game.input.onDown.add(this.next, this);
     this.next();
   }
 
@@ -42,7 +41,7 @@ class Dialog extends Phaser.Group {
   }
 
   string_to_phrase(string) {
-    let this_phrase = new Phrase(this.camera, string, this.font_size, this.fade_in_speed);
+    let this_phrase = new Phrase(this.game, string, this.font_size, this.fade_in_speed);
     this.addChild(this_phrase);
     return this_phrase;
   }

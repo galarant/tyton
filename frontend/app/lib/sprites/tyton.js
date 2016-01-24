@@ -52,6 +52,10 @@ class Tyton extends Phaser.Sprite {
     this.check_health();
   }
 
+  say(string_array) {
+    new Modal(this.game, new Dialog(this.game, string_array));
+  }
+
   check_health () {
     if (this.health <= 0 && this.alive) {
       this.die();

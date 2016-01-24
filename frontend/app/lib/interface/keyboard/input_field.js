@@ -1,10 +1,9 @@
 class InputField extends Phaser.Group {
 
-  constructor(state, x, y, chr_size, max_length=20, placeholder="Lorizzle ipsizzle dolor sit amet, shiznit.", value="") {
+  constructor(game, x, y, chr_size, max_length=20, placeholder="Lorizzle ipsizzle dolor sit amet, shiznit.", value="") {
 
     //group attributes
-    super(state, state.world);
-    this.game = state.game;
+    super(game, game.world);
     this.x = x;
     this.y = y;
     this.max_length = max_length;

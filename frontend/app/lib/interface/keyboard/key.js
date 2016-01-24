@@ -1,12 +1,11 @@
 class Key extends Phaser.Group {
 
   //TODO: clean up this def
-  constructor(keyboard, state, chr, x, y, width, height,
+  constructor(keyboard, game, chr, x, y, width, height,
     sprite_key="squircle", on_down=null, on_down_context=null, key_code=null) {
 
     //group attributes
-    super(state, state.world);
-    this.game = state.game;
+    super(game, game.world);
     this.x = x;
     this.y = y;
     this.keyboard = keyboard;

@@ -3,9 +3,9 @@ import "moment-duration-format/lib/moment-duration-format";
 
 class Countdown extends Phaser.BitmapText {
 
-  constructor(state, x, y, font_size, duration) {
+  constructor(game, x, y, font_size, duration) {
 
-    super(state.game, x, y, "proxima_nova", '', font_size);
+    super(game, x, y, "proxima_nova", '', font_size);
 
     //object attributes
     this.expires_at = moment().add(duration, 'seconds');

@@ -71,7 +71,7 @@ class Modal extends Phaser.Group {
     fade_out_tween.onComplete.add(this.destroy, this, 0, return_value);
   }
 
-  destroy(return_value) {
+  destroy(a, b, return_value) {
     this.game.paused = false;
     this.game.modal = null;
     this.game.state.onPauseUpdateCallback = null;
