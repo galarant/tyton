@@ -7,25 +7,24 @@ import { Dialog } from "../interface/dialog";
 
 class Task extends Phaser.Group {
 
-  constructor(state, font_size=null, duration=70, difficulty=null, name=null,
+  constructor(game, font_size=null, duration=70, difficulty=null, name=null,
               created_at=null, started_at=null, finished_at=null, succeeded=null) {
 
-    super(state.game, state.world);
-    this.state = state;
+    super(game, game.world);
     this.fixedToCamera = true;
     this.duration = duration;
     this.expiry_signal = new Phaser.Signal();
 
     if (font_size) {
       this.font_size = font_size;
-    } else if (state.game.font_size) {
-      this.font_size = state.game.font_size;
+    } else if (game.font_size) {
+      this.font_size = game.font_size;
     }
 
     //new Task so we need to raise the modals
     if (name === null) {
-      state.game.modal = new Modal(state, new Keyboard(state));
-      state.game.modal.submit_signal.addOnce(this.name_submit_handler, this);
+      let modal = new Modal(game, new Keyboard(game));
+      modal.submit_signal.addOnce(this.name_submit_handler, this);
     }
   }
 
@@ -35,16 +34,16 @@ class Task extends Phaser.Group {
   }
 
   set_sprites() {
-    let name_sprite = new Phaser.BitmapText(this.state.game,
+    let name_sprite = new Phaser.BitmapText(this.game,
       0, 0, "proxima_nova", this.name, this.font_size);
     this.addChild(name_sprite);
 
-    this.countdown = new Countdown(this.state,
+    this.countdown = new Countdown(this.game,
       name_sprite.width + this.font_size / 2, 0, this.font_size, this.duration);
     this.addChild(this.countdown);
     this.cameraOffset = new Phaser.Point(20, 20);
     this.alpha = 0;
-    this.state.game.add.tween(this).to({alpha: 1.0},
+    this.game.add.tween(this).to({alpha: 1.0},
       Phaser.Timer.SECOND * 1.0, "Linear", true);
     this.countdown.expiry_signal.addOnce(this.expire, this);
   }

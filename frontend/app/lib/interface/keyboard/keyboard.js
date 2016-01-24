@@ -4,7 +4,7 @@ import { InputField } from './input_field';
 
 class Keyboard extends Phaser.Group {
 
-  constructor(state, key_code_rows=[
+  constructor(game, key_code_rows=[
     [81,87,69,82,84,89,85,73,79,80],
     [65,83,68,70,71,72,74,75,76],
     [90,88,67,86,66,78,77],
@@ -12,8 +12,7 @@ class Keyboard extends Phaser.Group {
   ]) {
 
     //group attributes
-    super(state, state.world);
-    this.game = state.game;
+    super(game, game.world);
     this.submit_signal = new Phaser.Signal();
     this.keys = [];
 
@@ -26,7 +25,7 @@ class Keyboard extends Phaser.Group {
     //add input field
     let input_max_length = 35;
     let input_size = this.game.camera.width / 25;
-    this.input_field = new InputField(state, input_size / 1.5, 0, input_size, input_max_length);
+    this.input_field = new InputField(game, input_size / 1.5, 0, input_size, input_max_length);
     this.addChild(this.input_field);
 
     //handle pointer input
@@ -38,7 +37,7 @@ class Keyboard extends Phaser.Group {
         throw("Phaser Keyboard rows have a maximum length of 10 characters");
       }
 
-      let key_row = new Phaser.Group(state, state.world);
+      let key_row = new Phaser.Group(game, game.world);
 
       //populate key_row
       let previous_key_right_edge = 0;
@@ -68,7 +67,7 @@ class Keyboard extends Phaser.Group {
           this_key_callback_context = this;
           chr = "\u2713";
         }
-        let key = new Key(this, state, chr, previous_key_right_edge, 0, this_key_width,
+        let key = new Key(this, game, chr, previous_key_right_edge, 0, this_key_width,
           key_height, this_key_sprite, this_key_callback, this_key_callback_context, key_code);
         this.keys.push(key);
         previous_key_right_edge += this_key_width + key_spacing;

@@ -2,10 +2,10 @@ import _ from "lodash";
 
 class Phrase extends Phaser.BitmapText {
 
-  constructor(camera, text, font_size=60,
+  constructor(game, text, font_size=60,
     fade_in_speed=Phaser.Timer.SECOND * 2.0) {
 
-    super(camera.game, 0, 0, "proxima_nova", text, font_size);
+    super(game, 0, 0, "proxima_nova", text, font_size);
 
     //sprite attributes
     this.anchor.setTo(0.5);
