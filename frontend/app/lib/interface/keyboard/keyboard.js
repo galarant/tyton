@@ -15,6 +15,7 @@ class Keyboard extends Phaser.Group {
     super(game, game.world);
     this.submit_signal = new Phaser.Signal();
     this.keys = [];
+    this.tweens = new Phaser.TweenManager(game);
 
     //define children
     let key_width = this.game.camera.width / 12;
@@ -25,7 +26,7 @@ class Keyboard extends Phaser.Group {
     //add input field
     let input_max_length = 35;
     let input_size = this.game.camera.width / 25;
-    this.input_field = new InputField(game, input_size / 1.5, 0, input_size, input_max_length);
+    this.input_field = new InputField(game, this, input_size / 1.5, 0, input_size, input_max_length);
     this.addChild(this.input_field);
 
     //handle pointer input

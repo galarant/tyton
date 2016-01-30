@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 class Modal extends Phaser.Group {
 
   constructor(game, intrface=null, bg_alpha=0.9,
@@ -9,6 +11,7 @@ class Modal extends Phaser.Group {
     this.submit_signal = new Phaser.Signal();
     this.fixedToCamera = true;
     this.cameraOffset = new Phaser.Point(0, 0);
+    this.tweens = new Phaser.TweenManager(game);
 
     //define background sprite
     this.bg = new Phaser.Sprite(game, 0, 0, "modal_bg");
@@ -41,7 +44,8 @@ class Modal extends Phaser.Group {
 
     //fade in bg
     let fade_in_tween = game.add.tween(this.bg).to({alpha: bg_alpha}, this.fade_duration, "Linear", true);
-    fade_in_tween.onComplete.add(this.show_intrface, this);
+    fade_in_tween.onComplete.addOnce(this.show_intrface, this);
+    this.tweens.add(fade_in_tween);
 
     //define game pause behavior
     if (pause_game) {
@@ -53,6 +57,9 @@ class Modal extends Phaser.Group {
 
   show_intrface() {
     this.intrface.alpha = 1;
+    if (this.intrface.initialize) {
+      this.intrface.initialize();
+    }
   }
 
   //the context for this function is the current game state, *not* the modal instance
@@ -60,15 +67,17 @@ class Modal extends Phaser.Group {
     //update interface
     if (this.game.modal && this.game.modal.intrface) {
       this.game.modal.intrface.update();
+      this.game.modal.tweens.update();
+      if (this.game.modal && this.game.modal.intrface.tweens) {
+        this.game.modal.intrface.tweens.update();
+      }
     }
-
-    //update tweens
-    this.game.tweens.update();
   }
 
   close(return_value) {
     let fade_out_tween = this.game.add.tween(this).to({alpha: 0}, this.fade_duration, "Linear", true);
-    fade_out_tween.onComplete.add(this.destroy, this, 0, return_value);
+    fade_out_tween.onComplete.addOnce(this.destroy, this, 0, return_value);
+    this.tweens.add(fade_out_tween);
   }
 
   destroy(a, b, return_value) {
