@@ -62,9 +62,16 @@ class PlayState extends Phaser.State {
     this.game.ground = new Ground(this.game);
 
     this.tyton = new Tyton(this.game);
-    this.task = new Task(this, this.game.font_size, 5);
-    this.task.expiry_signal.addOnce(this.task_expired, this);
-    //this.test = new Modal(this.game, new Keyboard(this.game));
+    let intro_speech = this.tyton.say(["Hello",
+      "I'm your Tyton.",
+      "I'm a little chance\nfor you to build a bigger life.",
+      "But I'm so close to dying.",
+      "Please don't let me die...",
+      "Enter a task for me?"]);
+    intro_speech.submit_signal.addOnce(function() {
+      this.task = new Task(this.game, this.game.font_size, 5);
+      this.task.submit_signal.addOnce(this.task_expired, this);
+    }, this);
 
   }
 

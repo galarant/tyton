@@ -13,7 +13,7 @@ class Task extends Phaser.Group {
     super(game, game.world);
     this.fixedToCamera = true;
     this.duration = duration;
-    this.expiry_signal = new Phaser.Signal();
+    this.submit_signal = new Phaser.Signal();
 
     if (font_size) {
       this.font_size = font_size;
@@ -45,11 +45,11 @@ class Task extends Phaser.Group {
     this.alpha = 0;
     this.game.add.tween(this).to({alpha: 1.0},
       Phaser.Timer.SECOND * 1.0, "Linear", true);
-    this.countdown.expiry_signal.addOnce(this.expire, this);
+    this.countdown.submit_signal.addOnce(this.expire, this);
   }
 
   expire() {
-    this.expiry_signal.dispatch();
+    this.submit_signal.dispatch();
   }
 
   update() {

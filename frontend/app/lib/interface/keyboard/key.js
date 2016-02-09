@@ -56,6 +56,7 @@ class Key extends Phaser.Group {
     this.fill_sprite.alpha = 0;
     if (this.game) {
       this.fill_tween = this.game.add.tween(this.fill_sprite).to({alpha: 1.0}, 100, "Linear", true, 0, 0, true);
+      this.keyboard.tweens.add(this.fill_tween);
     }
   }
 

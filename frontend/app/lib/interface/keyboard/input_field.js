@@ -1,6 +1,8 @@
 class InputField extends Phaser.Group {
 
-  constructor(game, x, y, chr_size, max_length=20, placeholder="Lorizzle ipsizzle dolor sit amet, shiznit.", value="") {
+  constructor(game, keyboard, x, y,
+    chr_size, max_length=20,
+    placeholder="Lorizzle ipsizzle dolor sit amet, shiznit.", value="") {
 
     //group attributes
     super(game, game.world);
@@ -19,6 +21,7 @@ class InputField extends Phaser.Group {
     cursor_blink.repeatAll(-1);
     cursor_blink.start();
     this.addChild(this.cursor);
+    keyboard.tweens.add(cursor_blink);
 
     //add placeholder text
     this.placeholder_sprite = new Phaser.BitmapText(this.game,
