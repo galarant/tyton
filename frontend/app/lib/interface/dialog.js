@@ -9,9 +9,10 @@ class Dialog extends Phaser.Group {
     super(game, game.world);
 
     //group attributes
+    this.tweens = new Phaser.TweenManager(game);
+    this.strings = strings;
     this.font_size = font_size;
     this.fade_in_speed = fade_in_speed;
-    this.phrases = _.map(strings, this.string_to_phrase, this);
     this.submit_signal = new Phaser.Signal();
 
     this.fixedToCamera = true;
@@ -20,6 +21,7 @@ class Dialog extends Phaser.Group {
     } else {
       this.cameraOffset = new Phaser.Point(game.camera.width / 2, game.camera.height / 2);
     }
+    this.current_string = null;
     this.current_phrase = null;
     this.on_down_binding = game.input.onDown.add(this.next, this);
     this.next();
@@ -30,8 +32,9 @@ class Dialog extends Phaser.Group {
       this.current_phrase.destroy();
     }
 
-    if (this.phrases.length > 0) {
-      this.current_phrase = this.phrases.shift();
+    if (this.strings.length > 0) {
+      this.current_string = this.strings.shift();
+      this.current_phrase = this.string_to_phrase(this.current_string);
       this.current_phrase.show();
     } else {
       this.on_down_binding.detach();
@@ -41,7 +44,7 @@ class Dialog extends Phaser.Group {
   }
 
   string_to_phrase(string) {
-    let this_phrase = new Phrase(this.game, string, this.font_size, this.fade_in_speed);
+    let this_phrase = new Phrase(this.game, string, this.font_size, this.fade_in_speed, this);
     this.addChild(this_phrase);
     return this_phrase;
   }

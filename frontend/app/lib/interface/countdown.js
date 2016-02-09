@@ -9,7 +9,7 @@ class Countdown extends Phaser.BitmapText {
 
     //object attributes
     this.expires_at = moment().add(duration, 'seconds');
-    this.expiry_signal = new Phaser.Signal();
+    this.submit_signal = new Phaser.Signal();
   }
 
   update() {
@@ -38,7 +38,7 @@ class Countdown extends Phaser.BitmapText {
   }
 
   expire() {
-    this.expiry_signal.dispatch();
+    this.submit_signal.dispatch();
   }
 
 }

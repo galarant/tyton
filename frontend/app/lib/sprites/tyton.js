@@ -53,7 +53,7 @@ class Tyton extends Phaser.Sprite {
   }
 
   say(string_array) {
-    new Modal(this.game, new Dialog(this.game, string_array));
+    return new Modal(this.game, new Dialog(this.game, string_array));
   }
 
   check_health () {
