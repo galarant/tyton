@@ -2,7 +2,6 @@ import _ from "lodash";
 
 import { Tyton } from "lib/sprites/tyton";
 import { Ground } from "lib/sprites/ground";
-import { PlayBg } from "lib/sprites/play_bg";
 import { Modal } from "lib/interface/modal";
 import { Keyboard } from "lib/interface/keyboard/keyboard";
 import { Task } from "lib/sprites/task";
@@ -44,7 +43,9 @@ class PlayState extends Phaser.State {
     this.game.cursors = this.game.input.keyboard.createCursorKeys();
 
     //config game world
-    this.game.world.setBounds(0, 0, this.game.width, this.game.height);
+    this.world.height = this.camera.height * 2;
+    this.world.width = this.camera.width * 2;
+    this.world.setBounds(0, 0, this.world.width, this.world.height);
 
     //config physics
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -58,10 +59,13 @@ class PlayState extends Phaser.State {
     this.game.physics.box2d.debugDraw.centerOfMass = true;
 
     //add game objects
-    this.play_bg = new PlayBg(this.game);
+    this.bg = this.game.add.tileSprite(0, 0,
+      this.world.width, this.world.height, "play_bg");
+   this.bg.tileScale = new Phaser.Point(2.0, 2.0);
     this.game.ground = new Ground(this.game);
 
     this.tyton = new Tyton(this.game);
+    /*
     let intro_speech = this.tyton.say(["Hello",
       "I'm your Tyton.",
       "I'm a little chance\nfor you to build a bigger life.",
@@ -72,6 +76,7 @@ class PlayState extends Phaser.State {
       this.task = new Task(this.game, this.game.font_size, 5);
       this.task.submit_signal.addOnce(this.task_expired, this);
     }, this);
+    */
 
   }
 
