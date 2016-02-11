@@ -6,12 +6,6 @@ class MenuState extends Phaser.State {
 
   create() {
     let game = this.game;
-    this.background = this.game.add.sprite(this.game.world.centerX,
-                                           this.game.world.centerY,
-                                           "background");
-    this.background.anchor.setTo(0.5);
-    this.background.width = this.game.width;
-    this.background.height = this.game.height;
 
     this.gradient_mask = this.game.add.sprite(this.game.world.centerX,
                                               this.game.world.centerY,
