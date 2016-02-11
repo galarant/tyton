@@ -1,10 +1,15 @@
+//general imports
 import _ from "lodash";
 
+//game world object imports
 import { Tyton } from "lib/sprites/tyton";
 import { Ground } from "lib/sprites/ground";
+import { Task } from "lib/sprites/task";
+import { Barrier } from "lib/sprites/barrier";
+
+//interface object imports
 import { Modal } from "lib/interface/modal";
 import { Keyboard } from "lib/interface/keyboard/keyboard";
-import { Task } from "lib/sprites/task";
 import { Dialog } from "lib/interface/dialog";
 
 class PlayState extends Phaser.State {
@@ -58,13 +63,22 @@ class PlayState extends Phaser.State {
     this.game.physics.box2d.debugDraw.pairs = true;
     this.game.physics.box2d.debugDraw.centerOfMass = true;
 
-    //add game objects
+    //add bg
     this.bg = this.game.add.tileSprite(0, 0,
       this.world.width, this.world.height, "play_bg");
-   this.bg.tileScale = new Phaser.Point(2.0, 2.0);
+    this.bg.tileScale = new Phaser.Point(2.0, 2.0);
+
+    //add ground
     this.game.ground = new Ground(this.game);
 
-    this.tyton = new Tyton(this.game);
+    //add tyton
+    this.game.tyton = new Tyton(this.game);
+
+    //add barriers
+    this.game.barrier = new Barrier(this.game,
+      this.game.world.width / 2.5, 0,
+      this.game.camera.width / 100, this.game.world.height - this.game.ground.height);
+
     /*
     let intro_speech = this.tyton.say(["Hello",
       "I'm your Tyton.",
