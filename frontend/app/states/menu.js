@@ -1,4 +1,4 @@
-import { Phrase } from 'lib/interface/phrase';
+import { Phrase } from 'lib/interface/display/phrase';
 
 class MenuState extends Phaser.State {
 

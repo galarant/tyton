@@ -1,5 +1,5 @@
-import { Modal } from 'lib/interface/modal';
-import { Dialog } from 'lib/interface/dialog';
+import { Modal } from 'lib/interface/display/modal';
+import { Dialog } from 'lib/interface/display/dialog';
 
 class Tyton extends Phaser.Sprite {
 

@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { Key } from './key';
-import { InputField } from './input_field';
+//import { Key } from './key';
+import { InputField } from '../display/fields/text';
 
 class Keyboard extends Phaser.Group {
 
@@ -30,7 +30,7 @@ class Keyboard extends Phaser.Group {
     this.addChild(this.input_field);
 
     //handle pointer input
-    this.game.input.onDown.add(this.handle_pointer_input, this, 0, "one", "two", "three");
+    this.game.input.onDown.add(this.handle_pointer_input, this, 0);
 
     //add key_rows
     _.each(key_code_rows, function(key_code_row, key_code_row_index) {
@@ -82,7 +82,7 @@ class Keyboard extends Phaser.Group {
     }, this);
   }
 
-  handle_pointer_input(this_pointer, this_event, one, two, three) {
+  handle_pointer_input(this_pointer, this_event) {
     let key_under_pointer = function(key) {
       let in_x_bounds = (this_pointer.x >= key.worldPosition.x &&
                          this_pointer.x <= key.worldPosition.x + key.width);
