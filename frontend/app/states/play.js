@@ -80,12 +80,16 @@ class PlayState extends Phaser.State {
       this.game.world.width / 2.5, 0,
       this.game.camera.width / 100, this.game.world.height - this.game.ground.height);
 
-    //TODO: left off here
     this.test_modal = new Modal(this.game,
-      new Button(this.game, 
-        this.game.camera.x / 2, this.game.camera.y / 2,
-        "OK" ));
+      new Button(this.game, null,
+        this.game.camera.width / 2, this.game.camera.height / 2,
+        this.game.camera.width / 10, this.game.camera.width / 10,
+        "@", 13, this.button_callback, this));
 
+  }
+
+  button_callback() {
+    console.log("button pressed");
   }
 
   update() {

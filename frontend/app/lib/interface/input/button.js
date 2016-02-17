@@ -1,29 +1,24 @@
 class Button extends Phaser.Group {
 
-  //TODO: clean up this def
-  constructor(game, x, y, label, myParent=null, width=30, height=30,
-    textField=null, callback=null, callbackContext=null, keyCode=null,
+  constructor(game, myParent=null, x=0, y=0, width=30, height=30, label="OK",
+    keyCode=null, callback=null, callbackContext=null, textField=null,
     outlineKey="squircle", fillKey="squircle_fill", labelFont="proxima_nova") {
 
     //group attributes
-    if (myParent) {
-      super(game, myParent);
-      this.x = x;
-      this.y = y;
-    } else {
-      super(game, game.camera);
-      this.fixedToCamera = true;
-      this.cameraOffset = new Phaser.Point(x, y);
-    }
+    super(game, myParent);
+    this.x = x;
+    this.y = y;
 
     this.keyCode = keyCode;
-    this.tweens = new Phaser.TweenManager();
+    this.tweens = new Phaser.TweenManager(game);
     this.textField = textField;
+    this.submit_signal = new Phaser.Signal();
 
     //add outline sprite
     this.outlineSprite = new Phaser.Sprite(this.game, 0, 0, outlineKey);
     this.outlineSprite.width = width;
     this.outlineSprite.height = height;
+    this.outlineSprite.anchor.setTo(0.5, 0.5);
     this.addChild(this.outlineSprite);
 
     //add fill sprite
@@ -31,16 +26,17 @@ class Button extends Phaser.Group {
     this.fillSprite.width = width;
     this.fillSprite.height = height;
     this.fillSprite.alpha = 0;
+    this.fillSprite.anchor.setTo(0.5, 0.5);
     this.addChild(this.fillSprite);
 
     //add label
     if (label instanceof Phaser.Sprite) {
       this.label = label;
-    } else if (label instanceof String) {
+    } else if (typeof(label) === "string") {
       this.label = new Phaser.BitmapText(this.game,
-                                         width / 2, height / 2,
-                                         labelFont, label, width / 3);
-      this.text.anchor = new Phaser.Point(0.5, 0.5);
+                                         0, 0,
+                                         labelFont, label, width / (label.length + 0.5));
+      this.label.anchor.setTo(0.5, 0.5);
     } else {
       throw("PhaserInterface.Button label must be of type String or type Phaser.Sprite");
     }
@@ -73,16 +69,17 @@ class Button extends Phaser.Group {
       }
       this.inputKey.onDown.add(this.fill, this);
     }
+    console.log(this);
 
   }
 
-  handle_pointer_input(this_pointer) {
+  handle_pointer_input(this_pointer, this_event) {
     let in_x_bounds = (
-      this_pointer.x >= this.worldPosition.x &&
-      this_pointer.x <= this.worldPosition.x + this.width);
+      this_pointer.x >= this.worldPosition.x - this.width / 2 &&
+      this_pointer.x <= this.worldPosition.x + this.width / 2);
     let in_y_bounds = (
-      this_pointer.y >= this.worldPosition.y &&
-      this_pointer.y <= this.worldPosition.y + this.height);
+      this_pointer.y >= this.worldPosition.y - this.height / 2 &&
+      this_pointer.y <= this.worldPosition.y + this.height / 2);
     if (in_x_bounds && in_y_bounds) {
       if (this.callback) {
         this.callback.call(this.callbackContext);
