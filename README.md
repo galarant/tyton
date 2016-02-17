@@ -15,7 +15,7 @@ The game of your life
 
 ### Front-end
 
-1. Globally install `gulp-cli`: `$ npm install -g gulp-cli`
+1. Globally install `gulp-cli` and `karma-cli`: `$ npm install -g gulp-cli karma-cli`
 
 2. Move to `frontend` directory: `$ cd frontend`
 
@@ -23,4 +23,6 @@ The game of your life
 
 4. Run gulp watcher: `$ gulp dev`
 
-5. Profit!
+5. Run karma: `$ karma start`
+
+6. Profit!
