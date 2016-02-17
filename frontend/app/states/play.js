@@ -8,9 +8,10 @@ import { Task } from "lib/sprites/task";
 import { Barrier } from "lib/sprites/barrier";
 
 //interface object imports
-import { Modal } from "lib/interface/modal";
-import { Keyboard } from "lib/interface/keyboard/keyboard";
-import { Dialog } from "lib/interface/dialog";
+import { Modal } from "lib/interface/display/modal";
+import { Dialog } from "lib/interface/display/dialog";
+//import { Keyboard } from "lib/interface/keyboard/keyboard";
+import { Button } from "lib/interface/input/button";
 
 class PlayState extends Phaser.State {
 
@@ -79,19 +80,16 @@ class PlayState extends Phaser.State {
       this.game.world.width / 2.5, 0,
       this.game.camera.width / 100, this.game.world.height - this.game.ground.height);
 
-    /*
-    let intro_speech = this.tyton.say(["Hello",
-      "I'm your Tyton.",
-      "I'm a little chance\nfor you to build a bigger life.",
-      "But I'm so close to dying.",
-      "Please don't let me die...",
-      "Enter a task for me?"]);
-    intro_speech.submit_signal.addOnce(function() {
-      this.task = new Task(this.game, this.game.font_size, 5);
-      this.task.submit_signal.addOnce(this.task_expired, this);
-    }, this);
-    */
+    this.test_modal = new Modal(this.game,
+      new Button(this.game, null,
+        this.game.camera.width / 2, this.game.camera.height / 2,
+        this.game.camera.width / 10, this.game.camera.width / 10,
+        "@", 13, this.button_callback, this));
 
+  }
+
+  button_callback() {
+    console.log("button pressed");
   }
 
   update() {
@@ -103,7 +101,7 @@ class PlayState extends Phaser.State {
 
   task_expired() {
     this.task.destroy();
-    this.tyton.say(["YOU DID BAD"]);
+    this.game.tyton.say(["YOU DID BAD"]);
   }
 
 }

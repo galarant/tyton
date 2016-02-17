@@ -1,9 +1,13 @@
+//generic imports
 import moment from "moment/moment";
 
-import { Modal } from "../interface/modal";
-import { Keyboard } from "../interface/keyboard/keyboard";
-import { Countdown } from "../interface/countdown";
-import { Dialog } from "../interface/dialog";
+//interface display imports
+import { Modal } from "lib/interface/display/modal";
+import { Dialog } from "lib/interface/display/dialog";
+import { Countdown } from "lib/interface/display/countdown";
+
+//interface input imports
+import { Keyboard } from "lib/interface/input/keyboard";
 
 class Task extends Phaser.Group {
 
