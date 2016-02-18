@@ -1,16 +1,17 @@
 import _ from "lodash";
-//import { Key } from './key';
-import { InputField } from '../display/fields/text';
+import { Button } from './button';
+import { TextField } from './text_field';
 
 class Keyboard extends Phaser.Group {
 
-  constructor(game, key_code_rows=[
-    [81,87,69,82,84,89,85,73,79,80],
-    [65,83,68,70,71,72,74,75,76],
-    [90,88,67,86,66,78,77],
-    [8,188,32,190,13]
-  ]) {
+  constructor(game, keyRows=null, outlineKey="squircle", ) {
 
+    [
+      [81,87,69,82,84,89,85,73,79,80],
+      [65,83,68,70,71,72,74,75,76],
+      [90,88,67,86,66,78,77],
+      [8,188,32,190,13]
+    ]
     //group attributes
     super(game, game.world);
     this.submit_signal = new Phaser.Signal();
