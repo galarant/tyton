@@ -10,8 +10,8 @@ import { Barrier } from "lib/sprites/barrier";
 //interface object imports
 import { Modal } from "lib/interface/display/modal";
 import { Dialog } from "lib/interface/display/dialog";
-//import { Keyboard } from "lib/interface/keyboard/keyboard";
 import { Button } from "lib/interface/input/button";
+import { Keyboard } from "lib/interface/input/keyboard";
 
 class PlayState extends Phaser.State {
 
@@ -80,16 +80,26 @@ class PlayState extends Phaser.State {
       this.game.world.width / 2.5, 0,
       this.game.camera.width / 100, this.game.world.height - this.game.ground.height);
 
-    this.test_modal = new Modal(this.game,
-      new Button(this.game, null,
-        this.game.camera.width / 2, this.game.camera.height / 2,
-        this.game.camera.width / 10, this.game.camera.width / 10,
-        "@", 13, this.button_callback, this));
+    let key_1 = new Button(this.game, null, 0, 0,
+      this.game.camera.width / 10, this.game.camera.width / 10,
+      "HELLO", 13, this.button_1_callback, this);
+    let key_2 = new Button(this.game, null, key_1.width + 15, 0,
+      this.game.camera.width / 10, this.game.camera.width / 10,
+      "WORLD", 16, this.button_2_callback, this);
+    let keyRow = new Phaser.Group(this.game);
+    keyRow.add(key_1);
+    keyRow.add(key_2);
+    this.keyboard = new Keyboard(this.game, [keyRow]);
+    this.world.add(this.keyboard);
 
   }
 
-  button_callback() {
-    console.log("button pressed");
+  button_1_callback() {
+    console.log("button 1 pressed so good");
+  }
+
+  button_2_callback() {
+    console.log("button 2 pressed so good");
   }
 
   update() {

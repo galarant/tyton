@@ -1,6 +1,6 @@
 class Button extends Phaser.Group {
 
-  constructor(game, myParent=null, x=0, y=0, width=30, height=30, label="OK",
+  constructor(game, myParent=null, x=0, y=0, width=60, height=60, label="OK",
     keyCode=null, callback=null, callbackContext=null, textField=null,
     outlineKey="squircle", fillKey="squircle_fill", labelFont="proxima_nova") {
 
