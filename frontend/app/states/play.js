@@ -10,8 +10,7 @@ import { Barrier } from "lib/sprites/barrier";
 //interface object imports
 import { Modal } from "lib/interface/display/modal";
 import { Dialog } from "lib/interface/display/dialog";
-//import { Keyboard } from "lib/interface/keyboard/keyboard";
-import { Button } from "lib/interface/input/button";
+import { Keyboard } from "lib/interface/input/keyboard";
 
 class PlayState extends Phaser.State {
 
@@ -80,16 +79,8 @@ class PlayState extends Phaser.State {
       this.game.world.width / 2.5, 0,
       this.game.camera.width / 100, this.game.world.height - this.game.ground.height);
 
-    this.test_modal = new Modal(this.game,
-      new Button(this.game, null,
-        this.game.camera.width / 2, this.game.camera.height / 2,
-        this.game.camera.width / 10, this.game.camera.width / 10,
-        "@", 13, this.button_callback, this));
+    this.keyboard = new Keyboard(this.game);
 
-  }
-
-  button_callback() {
-    console.log("button pressed");
   }
 
   update() {

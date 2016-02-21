@@ -1,105 +1,101 @@
 import _ from "lodash";
-//import { Key } from './key';
-import { InputField } from '../display/fields/text';
+import { Button } from './button';
+import { ButtonRow } from './button_row';
+import { TextField } from './text_field';
 
 class Keyboard extends Phaser.Group {
 
-  constructor(game, key_code_rows=[
-    [81,87,69,82,84,89,85,73,79,80],
-    [65,83,68,70,71,72,74,75,76],
-    [90,88,67,86,66,78,77],
-    [8,188,32,190,13]
-  ]) {
+  constructor(game, buttonRows=null, textField=null, font="proxima_nova",
+    squareOutlineKey="squircle", rectOutlineKey="rectircle", fillKey="squircle_fill",
+    inputMaxLength=25, inputPlaceholder="Tap the screen or type on your keyboard",
+    defaultValue="") {
 
-    //group attributes
     super(game, game.world);
-    this.submit_signal = new Phaser.Signal();
-    this.keys = [];
+    this.submitSignal = new Phaser.Signal();
     this.tweens = new Phaser.TweenManager(game);
+    this.font = font;
+    this.squareOutlineKey = squareOutlineKey;
+    this.rectOutlineKey = rectOutlineKey;
+    this.fillKey = fillKey;
 
-    //define children
-    let key_width = this.game.camera.width / 12;
-    let key_height = key_width;
-    let key_spacing = this.game.camera.width * 0.015;
-    let key_pos = null;
+    this.textField = new TextField(game, 0, 0,
+      font, (this.game.camera.width / inputMaxLength) * 1.25,
+      inputMaxLength, inputPlaceholder, defaultValue);
+    this.add(this.textField);
 
-    //add input field
-    let input_max_length = 35;
-    let input_size = this.game.camera.width / 25;
-    this.input_field = new InputField(game, this, input_size / 1.5, 0, input_size, input_max_length);
-    this.addChild(this.input_field);
+    if (!buttonRows) {
+      this.buttonRows = this.createQwertyRows();
+    } else {
+      this.buttonRows = buttonRows;
+    }
 
-    //handle pointer input
-    this.game.input.onDown.add(this.handle_pointer_input, this, 0);
-
-    //add key_rows
-    _.each(key_code_rows, function(key_code_row, key_code_row_index) {
-      if (key_code_row.length > 10) {
-        throw("Phaser Keyboard rows have a maximum length of 10 characters");
-      }
-
-      let key_row = new Phaser.Group(game, game.world);
-
-      //populate key_row
-      let previous_key_right_edge = 0;
-      _.each(key_code_row, function(key_code, key_code_index) {
-        let this_key_width = key_width;
-        let this_key_sprite = "squircle";
-        let this_key_callback = null;
-        let this_key_callback_context = null;
-        //let chr = String.fromCharCode((96 <= key_code && key_code <= 105) ? key_code - 48: key_code);
-        let chr_code = key_code - 48 * Math.floor(key_code / 48);
-        let chr = String.fromCharCode((96 <= key_code) ? chr_code: key_code);
-        if (key_code === Phaser.KeyCode.SPACEBAR) {
-          this_key_width = key_width * 3;
-          this_key_sprite = "rectircle";
-        }
-        else if (key_code === Phaser.KeyCode.BACKSPACE) {
-          this_key_width = key_width * 2;
-          this_key_sprite = "rectircle";
-          this_key_callback = this.input_field.backspace;
-          this_key_callback_context = this.input_field;
-          chr = "\u2190";
-        }
-        else if (key_code === Phaser.KeyCode.ENTER) {
-          this_key_width = key_width * 2;
-          this_key_sprite = "rectircle";
-          this_key_callback = this.submit;
-          this_key_callback_context = this;
-          chr = "\u2713";
-        }
-        let key = new Key(this, game, chr, previous_key_right_edge, 0, this_key_width,
-          key_height, this_key_sprite, this_key_callback, this_key_callback_context, key_code);
-        this.keys.push(key);
-        previous_key_right_edge += this_key_width + key_spacing;
-        key_row.addChild(key);
-      }, this);
-      this.addChild(key_row);
-
-      key_row.x = (this.game.camera.width - key_row.width) / 2;
-      key_row.y = (key_height + key_spacing) * key_code_row_index + (key_height * 1.5);
-
+    let buttonRowHeight = this.buttonRows[0].children[0].height,
+      buttonRowY = buttonRowHeight * 1.5,
+      buttonRowSpacing = buttonRowHeight / 8,
+      maxRowWidth = _.max(_.map(this.buttonRows, function(buttonRow) {
+        return buttonRow.width;
+      }));
+    _.forEach(this.buttonRows, function(buttonRow){
+      buttonRow.x = (maxRowWidth - buttonRow.width) / 2;
+      buttonRow.y = buttonRowY;
+      buttonRowY += (buttonRow.height + buttonRowSpacing);
+      this.add(buttonRow);
     }, this);
+
+    this.fixedToCamera = true;
+    this.cameraOffset.setTo((this.game.camera.width - this.width) / 2, 0);
+
   }
 
-  handle_pointer_input(this_pointer, this_event) {
-    let key_under_pointer = function(key) {
-      let in_x_bounds = (this_pointer.x >= key.worldPosition.x &&
-                         this_pointer.x <= key.worldPosition.x + key.width);
-      let in_y_bounds = (this_pointer.y >= key.worldPosition.y &&
-                         this_pointer.y <= key.worldPosition.y + key.height);
-      return (in_x_bounds && in_y_bounds);
-    };
-    let this_key = _.find(this.keys, key_under_pointer);
-    if (this_key) {
-      this_key.on_down.call(this_key.on_down_context);
-      this_key.on_down_fill.call(this_key);
+  createQwertyRows() {
+    let keyCodeRows = [
+      [81,87,69,82,84,89,85,73,79,80],
+      [65,83,68,70,71,72,74,75,76],
+      [90,88,67,86,66,78,77],
+      [8,188,32,190,13]
+    ];
+    let buttonRows = [];
+
+    _.forEach(keyCodeRows, function(keyCodeRow) {
+      let buttons = _.map(keyCodeRow, this.createQwertyButton, this);
+      buttonRows.push(new ButtonRow(this.game, buttons));
+    }, this);
+    return buttonRows;
+
+  }
+
+  createQwertyButton(keyCode) {
+    let thisButtonWidth = this.game.camera.width / 12,
+      thisButtonHeight = thisButtonWidth,
+      chrCode = keyCode - 48 * Math.floor(keyCode / 48),
+      label = String.fromCharCode((96 <= keyCode) ? chrCode: keyCode),
+      thisButtonCallback = null,
+      thisButtonCallbackContext = null,
+      outlineKey = this.squareOutlineKey;
+
+    if (keyCode === Phaser.KeyCode.SPACEBAR) {
+      thisButtonWidth *= 3;
+      outlineKey = this.rectOutlineKey;
+    } else if (keyCode === Phaser.KeyCode.BACKSPACE) {
+      thisButtonWidth *= 2;
+      outlineKey = this.rectOutlineKey;
+      thisButtonCallback = this.textField.backspace;
+      thisButtonCallbackContext = this.textField;
+      label = "\u2190";
+    } else if (keyCode === Phaser.KeyCode.ENTER) {
+      thisButtonWidth *= 2;
+      outlineKey = this.rectOutlineKey;
+      thisButtonCallback = this.submit;
+      thisButtonCallbackContext = this;
+      label = "ENTER";
     }
+    return new Button(this.game, null, 0, 0, thisButtonWidth, thisButtonHeight,
+      label, keyCode, thisButtonCallback, thisButtonCallbackContext, this.textField,
+      outlineKey, this.fillKey, this.font);
   }
 
   submit() {
-    this.submit_signal.return_value = this.input_field.value_sprite.text;
-    this.submit_signal.dispatch(this.input_field.value_sprite.text);
+    this.submitSignal.dispatch(this.textField.valueSprite.text);
   }
 
 }
