@@ -10,7 +10,7 @@ class TextField extends Phaser.Group {
     this.tweens = new Phaser.TweenManager(game);
 
     //add cursor
-    this.cursor = new Phaser.BitmapText(this.game, x, y + fontSize, font, "_", fontSize);
+    this.cursor = new Phaser.BitmapText(this.game, x, y, font, "_", fontSize);
     this.addChild(this.cursor);
 
     let cursorBlink = this.game.add.tween(this.cursor);
@@ -21,13 +21,13 @@ class TextField extends Phaser.Group {
     this.tweens.add(cursorBlink);
 
     //add placeholder text
-    this.placeholderSprite = new Phaser.BitmapText(this.game, x, y + fontSize,
+    this.placeholderSprite = new Phaser.BitmapText(this.game, x, y,
       font, placeholderText, fontSize);
     this.placeholderSprite.tint = 0x484848;
     this.addChild(this.placeholderSprite);
 
     //initiate value
-    this.valueSprite= new Phaser.BitmapText(game, x, y + fontSize, font, value, fontSize);
+    this.valueSprite= new Phaser.BitmapText(game, x, y, font, value, fontSize);
     this.addChild(this.valueSprite);
   }
 
