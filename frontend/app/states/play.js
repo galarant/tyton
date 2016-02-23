@@ -79,7 +79,7 @@ class PlayState extends Phaser.State {
       this.game.world.width / 2.5, 0,
       this.game.camera.width / 100, this.game.world.height - this.game.ground.height);
 
-    this.keyboard = new Keyboard(this.game);
+    this.test = new Modal(this.game, new Keyboard(this.game));
 
   }
 

@@ -30,7 +30,7 @@ class Keyboard extends Phaser.Group {
     }
 
     let buttonRowHeight = this.buttonRows[0].children[0].height,
-      buttonRowY = buttonRowHeight * 1.5,
+      buttonRowY = buttonRowHeight,
       buttonRowSpacing = buttonRowHeight / 8,
       maxRowWidth = _.max(_.map(this.buttonRows, function(buttonRow) {
         return buttonRow.width;
