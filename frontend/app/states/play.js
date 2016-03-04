@@ -10,6 +10,7 @@ import { Barrier } from "lib/sprites/barrier";
 //interface object imports
 import { Modal } from "lib/interface/display/modal";
 import { Dialog } from "lib/interface/display/dialog";
+import { Button } from "lib/interface/input/button";
 import { Keyboard } from "lib/interface/input/keyboard";
 
 class PlayState extends Phaser.State {
@@ -79,9 +80,40 @@ class PlayState extends Phaser.State {
       this.game.world.width / 2.5, 0,
       this.game.camera.width / 100, this.game.world.height - this.game.ground.height);
 
-    this.test = new Modal(this.game, new Keyboard(this.game));
+    //initialize keyboard to null
+    this.keyboard = null;
+
+    //add keyboard demo button
+    this.keyboardDemoButton = new Button(this.game, null, this.game.camera.width / 100,
+      this.game.ground.y - this.game.ground.height * 0.4, this.game.camera.width/12,
+      this.game.camera.width/12, "KEYBOARD", null, this.keyboardButtonCallback, this);
+
+    this.world.add(this.keyboardDemoButton);
+
+    //add label to display user input from keyboard
+    let keyboardDemoInput = new Phaser.BitmapText(this.game,
+      this.game.camera.width / 100, this.game.ground.y - this.game.ground.height * 0.75,
+      "proxima_nova");
+
+    this.label = keyboardDemoInput;
+
+    this.world.add(this.label);
 
   }
+
+    keyboardButtonCallback() {
+      if(!this.keyboard) {
+        this.keyboardDemoButton.alpha = 0;
+        this.keyboard = new Keyboard(this.game);
+        this.keyboard.submitSignal.addOnce(this.keyboardInput, this);
+      }
+    }
+
+    keyboardInput(returnValue) {
+      this.label.text = returnValue;
+      this.keyboard = null;
+      this.keyboardDemoButton.alpha = 1;
+    }
 
   update() {
     //debug info

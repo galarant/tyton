@@ -96,6 +96,7 @@ class Keyboard extends Phaser.Group {
 
   submit() {
     this.submitSignal.dispatch(this.textField.valueSprite.text);
+    super.destroy();
   }
 
 }
